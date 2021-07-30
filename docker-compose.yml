@@ -1,0 +1,51 @@
+version: '2'
+services:
+  mariadb:
+    image: mariadb
+    container_name: mariadb-testlink
+    ports:
+      - '3306:3306'
+    env_file:
+      - .env
+    environment:
+      # - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=bitnami_testlink
+      - MARIADB_USER=bn_testlink
+    restart: always
+    volumes:
+      - database:/bitnami/mariadb
+      - ./config/mariadb/dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '--silent']
+      retries: 20
+      timeout: 200s
+      interval: 2s
+
+  testlink:
+    image: docker.io/bitnami/testlink:1
+    container_name: testlink
+    ports:
+      - '80:8080'
+      - '443:8443'
+    environment:
+      - TESTLINK_DATABASE_HOST=mariadb
+      - TESTLINK_DATABASE_PORT_NUMBER=3306
+      - TESTLINK_DATABASE_USER=root
+      - TESTLINK_DATABASE_NAME=bitnami_testlink
+      - ALLOW_EMPTY_PASSWORD=yes
+      - TESTLINK_SMTP_HOST=smtp.gmail.com
+      - TESTLINK_SMTP_PORT=587
+      - TESTLINK_SMTP_USER=${TESTLINK_SMTP_USER}
+      - TESTLINK_SMTP_PASSWORD=${TESTLINK_SMTP_USER}
+    restart: always
+    volumes:
+      - 'testlink_data:/bitnami/testlink'
+    depends_on:
+      mariadb:
+        condition: service_healthy
+volumes:
+  testlink_data:
+    driver: local
+  database:
+    driver: local
