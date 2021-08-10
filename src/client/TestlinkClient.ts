@@ -34,4 +34,14 @@ export class TestlinkClient {
       `/testprojects/${testProjectId}/testplans`
     );
   }
+
+  public async getTestCases(
+    requestConfig: AxiosRequestConfig,
+    testProjectId: number
+  ): Promise<AxiosResponse> {
+    return await AxiosClientHelper.getClientResponse(
+      requestConfig,
+      `/testprojects/${testProjectId}/testcases`
+    );
+  }
 }
