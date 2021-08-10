@@ -1,0 +1,9 @@
+{
+  "App": {
+    "port": "APP_PORT",
+    "testlink": {
+      "url": "TESTLINK_URL",
+      "apikey": "TESTLINK_API_KEY"
+    }
+  }
+}

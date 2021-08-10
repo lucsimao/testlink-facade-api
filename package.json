@@ -1,0 +1,40 @@
+{
+  "name": "testlink-facace-api",
+  "version": "1.0.0",
+  "description": "TestLink Facade Api",
+  "main": "index.js",
+  "repository": "https://github.com/lucsimao/testlink-facade-api.git",
+  "author": "lucsimao <lucasimao64@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "test": "yarn lint && yarn style:check && yarn test:unit && yarn test:functional",
+    "test:unit": "dotenv -e .env -- jest",
+    "test:functional": "jest --projects ./test --forceExit --runInBand",
+    "lint": "eslint ./src ./test --ext .ts",
+    "lint:fix": "eslint ./src ./test --ext .ts --fix",
+    "style:check": "prettier --check src/**/*.ts test/**/*.ts",
+    "style:fix": "prettier --write src/**/*.ts test/**/*.ts",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@types/config": "^0.0.39",
+    "@types/jest": "^26.0.24",
+    "@types/module-alias": "^2.0.1",
+    "@types/node": "^13.13.2",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^4.28.5",
+    "@typescript-eslint/parser": "^4.28.5",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.1",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "supertest": "^6.1.4",
+    "ts-jest": "^27.0.4"
+  },
+  "dependencies": {
+    "config": "^3.3.6",
+    "dotenv-cli": "^3.2.0",
+    "module-alias": "^2.2.2"
+  }
+}
