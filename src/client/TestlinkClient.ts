@@ -24,4 +24,14 @@ export class TestlinkClient {
 
     return await AxiosClientHelper.getClientResponse(requestConfig, route);
   }
+
+  public async getTestPlan(
+    requestConfig: AxiosRequestConfig,
+    testProjectId: number
+  ): Promise<AxiosResponse> {
+    return await AxiosClientHelper.getClientResponse(
+      requestConfig,
+      `/testprojects/${testProjectId}/testplans`
+    );
+  }
 }
