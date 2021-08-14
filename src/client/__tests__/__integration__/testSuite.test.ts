@@ -1,6 +1,6 @@
 import config from 'config';
-import { TestlinkClient } from '../TestlinkClient';
-import unitTestSuiteFixture from './fixtures/unitTestSuiteFixture.json';
+import { TestlinkClient } from '@src/client/TestlinkClient';
+import unitTestSuiteFixture from '@src/client/__tests__/fixtures/unitTestSuiteFixture.json';
 
 describe('TestSuite Test', () => {
   it('should return the normalized testSuite from Testlink Service', async () => {
