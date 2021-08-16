@@ -1,22 +1,26 @@
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
-import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ITestProject } from '@src/models/ITestProject';
+import { AxiosRequestConfig } from 'axios';
 import { TestLink } from 'testlink-xmlrpc';
 export class TestlinkClient {
   public async getTestProjects(
     requestConfig: AxiosRequestConfig,
     testProjectId?: number
-  ): Promise<AxiosResponse> {
+  ): Promise<ITestProject[]> {
     const route = testProjectId
       ? `/testprojects/${testProjectId}`
       : '/testprojects';
 
-    return await AxiosClientHelper.getClientResponse(requestConfig, route);
+    return await AxiosClientHelper.getClientResponse<ITestProject>(
+      requestConfig,
+      route
+    );
   }
 
   public async getTestPlan(
     requestConfig: AxiosRequestConfig,
     testProjectId: number
-  ): Promise<AxiosResponse> {
+  ): Promise<unknown[]> {
     return await AxiosClientHelper.getClientResponse(
       requestConfig,
       `/testprojects/${testProjectId}/testplans`
@@ -26,7 +30,7 @@ export class TestlinkClient {
   public async getTestCases(
     requestConfig: AxiosRequestConfig,
     testProjectId: number
-  ): Promise<AxiosResponse> {
+  ): Promise<unknown[]> {
     return await AxiosClientHelper.getClientResponse(
       requestConfig,
       `/testprojects/${testProjectId}/testcases`
@@ -36,7 +40,7 @@ export class TestlinkClient {
   public async getBuilds(
     requestConfig: AxiosRequestConfig,
     testPlan: ITestPlan
-  ): Promise<AxiosResponse> {
+  ): Promise<unknown[]> {
     return await AxiosClientHelper.getClientResponse(
       requestConfig,
       `/testplans/${testPlan.apikey}/builds`
