@@ -1,19 +1,6 @@
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { TestLink } from 'testlink-xmlrpc';
-
-export interface ITestProject {
-  readonly id: number;
-  readonly name: string;
-  readonly apikey: string;
-  readonly prefix: string;
-}
-
-export interface ITestPlan {
-  readonly id?: string;
-  readonly apikey: string;
-}
-
 export class TestlinkClient {
   public async getTestProjects(
     requestConfig: AxiosRequestConfig,
