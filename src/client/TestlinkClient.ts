@@ -1,4 +1,5 @@
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
+import { ITestPlan } from '@src/models/ITestPlan';
 import { ITestProject } from '@src/models/ITestProject';
 import { AxiosRequestConfig } from 'axios';
 import { TestLink } from 'testlink-xmlrpc';
@@ -43,7 +44,7 @@ export class TestlinkClient {
   ): Promise<unknown[]> {
     return await AxiosClientHelper.getClientResponse(
       requestConfig,
-      `/testplans/${testPlan.apikey}/builds`
+      `/testplans/${testPlan.apiKey}/builds`
     );
   }
 
