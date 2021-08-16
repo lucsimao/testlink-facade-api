@@ -1,6 +1,16 @@
 import config from 'config';
 import { TestlinkClient } from '@src/client/TestlinkClient';
-import unitTestPlanFixture from '@src/client/__tests__/fixtures/unitTestPlanFixture.json';
+const unitTestPlanFixture = {
+  '2': {
+    active: '1',
+    api_key: 'e670def31dcc2a19a074cf60a690c9db9e914d85e6cbbf5058d556f993e6e8b4',
+    id: '2',
+    is_public: '1',
+    name: 'test-plan-example',
+    notes: '',
+    testproject_id: '1',
+  },
+};
 
 describe('TestPlan Test', () => {
   it('should return the normalized testPlan from Testlink Service', async () => {
