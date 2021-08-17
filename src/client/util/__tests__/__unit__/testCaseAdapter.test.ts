@@ -1,11 +1,11 @@
-import testCaseFixture from '@src/client/__tests__/fixtures/unitTestCaseFixture.json';
-import normalizedTestCaseFixture from '@src/client/util/__tests__/fixtures/normalizedTestCaseFixture.json';
-
 import {
   IUnnormalizedTestCase,
   TestCaseAdapter,
 } from '@src/client/util/adapters/testCaseAdapter';
+
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
+import normalizedTestCaseFixture from '@test/fixtures/normalized/testCase.json';
+import testCaseFixture from '@test/fixtures/unnormalized/testCase.json';
 
 describe('Test Project Adapter Test', () => {
   it('should return the correct INormalizedTestCase when receive a valid ITestCase', async () => {

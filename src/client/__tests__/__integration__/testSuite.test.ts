@@ -1,16 +1,12 @@
-import config from 'config';
+import { TestHelper } from '@test/util/testHelper';
 import { TestlinkClient } from '@src/client/TestlinkClient';
-import unitTestSuiteFixture from '@src/client/__tests__/fixtures/unitTestSuiteFixture.json';
+import testSuiteFixture from '@test/fixtures/normalized/testSuite.json';
 
 describe('TestSuite Test', () => {
   it('should return the normalized testSuite from Testlink Service', async () => {
     const testlinkClient = new TestlinkClient();
-    const headers = {
-      testlinkApiKey: config.get('App.testlink.apikey'),
-      testlinkPort: 80,
-      testlinkUrl: 'localhost',
-    };
-    const response = await testlinkClient.getTestSuite({ headers }, 2);
-    expect(response).toEqual(unitTestSuiteFixture);
+    const requestConfig = TestHelper.getIntegrationTestHeader();
+    const response = await testlinkClient.getTestSuites(requestConfig, 2);
+    expect(response).toEqual(testSuiteFixture);
   });
 });

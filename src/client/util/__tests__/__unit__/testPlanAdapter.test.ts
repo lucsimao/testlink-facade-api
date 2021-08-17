@@ -1,11 +1,11 @@
-import testPlanFixture from '@src/client/__tests__/fixtures/unitTestPlanFixture.json';
-import normalizedTestPlanFixture from '@src/client/util/__tests__/fixtures/normalizedTestPlanFixture.json';
-
 import {
   IUnnormalizedTestPlan,
   TestPlanAdapter,
 } from '@src/client/util/adapters/TestPlanAdapter';
+
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
+import normalizedTestPlanFixture from '@test/fixtures/normalized/testPlan.json';
+import testPlanFixture from '@test/fixtures/unnormalized/testPlan.json';
 
 describe('Test Project Adapter Test', () => {
   it('should return the correct INormalizedTestPlan when receive a valid ITestPlan', async () => {

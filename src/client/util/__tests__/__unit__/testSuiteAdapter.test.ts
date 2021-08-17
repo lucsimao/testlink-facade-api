@@ -1,30 +1,31 @@
-import testPlanFixture from '@src/client/__tests__/fixtures/unitTestPlanFixture.json';
-import normalizedTestPlanFixture from '@src/client/util/__tests__/fixtures/normalizedTestPlanFixture.json';
 import {
-  IUnnormalizedTestPlan,
-  TestPlanAdapter,
-} from '@src/client/util/adapters/TestPlanAdapter';
+  IUnnormalizedTestSuite,
+  TestSuiteAdapter,
+} from '@src/client/util/adapters/TestSuiteAdapter';
+
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
+import normalizedTestSuiteFixture from '@test/fixtures/normalized/testSuite.json';
+import testSuiteFixture from '@test/fixtures/unnormalized/testSuite.json';
 
 describe('Test Project Adapter Test', () => {
-  it('should return the correct INormalizedTestPlan when receive a valid ITestPlan', async () => {
-    const testPlan = testPlanFixture;
+  it('should return the correct INormalizedTestSuite when receive a valid ITestSuite', async () => {
+    const testSuite = testSuiteFixture;
 
-    const normalizedTestPlan = new TestPlanAdapter().normalize(testPlan);
+    const normalizedTestSuite = new TestSuiteAdapter().normalize(testSuite);
 
-    expect(normalizedTestPlan).toEqual(normalizedTestPlanFixture);
+    expect(normalizedTestSuite).toEqual(normalizedTestSuiteFixture);
   });
 
-  it('should return a empty array when receive neither valid ITestPlan', async () => {
+  it('should return a empty array when receive neither valid ITestSuite', async () => {
     AxiosClientHelper.getClientResponse = jest
       .fn()
       .mockResolvedValue([{ id: 'non_validProject' }]);
 
-    const TestPlan =
-      await AxiosClientHelper.getClientResponse<IUnnormalizedTestPlan>({}, '');
+    const TestSuite =
+      await AxiosClientHelper.getClientResponse<IUnnormalizedTestSuite>({}, '');
 
-    const normalizedTestPlan = new TestPlanAdapter().normalize(TestPlan);
+    const normalizedTestSuite = new TestSuiteAdapter().normalize(TestSuite);
 
-    expect(normalizedTestPlan).toEqual([]);
+    expect(normalizedTestSuite).toEqual([]);
   });
 });

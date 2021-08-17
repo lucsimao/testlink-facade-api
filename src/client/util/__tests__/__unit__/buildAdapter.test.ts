@@ -1,11 +1,11 @@
-import buildFixture from '@src/client/__tests__/fixtures/unitBuildFixture.json';
-import normalizedBuildFixture from '@src/client/util/__tests__/fixtures/normalizedBuildFixture.json';
-
 import {
-  IUnnormalizedBuild,
   BuildAdapter,
+  IUnnormalizedBuild,
 } from '@src/client/util/adapters/buildAdapter';
+
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
+import buildFixture from '@test/fixtures/unnormalized/build.json';
+import normalizedBuildFixture from '@test/fixtures/normalized/build.json';
 
 describe('Test Project Adapter Test', () => {
   it('should return the correct INormalizedBuild when receive a valid IBuild', async () => {

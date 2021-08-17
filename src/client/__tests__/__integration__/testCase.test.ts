@@ -1,15 +1,12 @@
-import config from 'config';
+import { TestHelper } from '@test/util/testHelper';
 import { TestlinkClient } from '@src/client/TestlinkClient';
-import unitTestCaseFixture from '@src/client/__tests__/fixtures/unitTestCaseFixture.json';
+import testCaseFixture from '@test/fixtures/normalized/testCase.json';
 
 describe('TestCase Test', () => {
   it('should return the normalized testCase from Testlink Service', async () => {
     const testlinkClient = new TestlinkClient();
-    const headers = {
-      testlinkApiKey: config.get('App.testlink.apikey'),
-      testlinkUrl: config.get('App.testlink.url'),
-    };
-    const response = await testlinkClient.getTestCases({ headers }, 1);
-    expect(response).toEqual(unitTestCaseFixture);
+    const requestConfig = TestHelper.getIntegrationTestHeader();
+    const response = await testlinkClient.getTestCases(requestConfig, 1);
+    expect(response).toEqual(testCaseFixture);
   });
 });
