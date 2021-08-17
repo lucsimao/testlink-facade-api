@@ -10,9 +10,10 @@
     "build": "tsc",
     "start": "yarn build && node dist/src/index.js",
     "start:local": "ts-node-dev 'src/index.ts'",
-    "test": "yarn lint && yarn style:check && yarn test:unit && yarn test:functional",
-    "test:unit": "dotenv -e .env -- jest",
-    "test:functional": "jest --projects ./test --forceExit --runInBand",
+    "test": "yarn lint && yarn style:check && yarn test:unit && yarn test:integration && yarn test:functional",
+    "test:unit": "jest --config ./config/jest/jest.unit.config.js",
+    "test:integration": "jest --config ./config/jest/jest.integration.config.js",
+    "test:functional": "jest --config ./config/jest/jest.functional.config.js --forceExit --runInBand",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "style:check": "prettier --check src/**/*.ts test/**/*.ts",
@@ -44,6 +45,7 @@
     "config": "^3.3.6",
     "dotenv-cli": "^3.2.0",
     "express": "^4.17.1",
+    "http-status-codes": "^2.1.4",
     "module-alias": "^2.2.2",
     "testlink-xmlrpc": "^2.0.2"
   }
