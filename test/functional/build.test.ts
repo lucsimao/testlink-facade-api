@@ -25,16 +25,16 @@ describe('Build Tests', () => {
       .spyOn(TestlinkClient.prototype, 'getBuilds')
       .mockImplementationOnce(() => Promise.reject('Internal server Error'));
 
-    const headers = {
-      ...TestHelper.getIntegrationTestHeader(),
+    const request = {
+      ...TestHelper.getFunctionalTestHeader().headers,
       [Params.TEST_PLAN_ID]: 2,
     };
 
     const { body, status } = await global.testRequest
       .get('/builds')
-      .set(headers);
+      .set(request);
 
-    expect(status).toBe(500);
     expect(body).toEqual({ error: 'Internal server Error' });
+    expect(status).toBe(500);
   });
 });

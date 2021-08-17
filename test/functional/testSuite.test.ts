@@ -34,7 +34,7 @@ describe('Test Project Test Suite', () => {
       .get('/testSuites')
       .set(request);
 
-    expect(status).toBe(500);
     expect(body).toEqual({ error: 'Internal server Error' });
+    expect(status).toBe(500);
   });
 });
