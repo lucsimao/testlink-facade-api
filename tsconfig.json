@@ -17,6 +17,7 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
       "@src/*": ["./src/*"],
