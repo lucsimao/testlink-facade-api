@@ -1,5 +1,5 @@
-import { ITestCase } from '@src/models/ITestCase';
 import { AbstractAdapter } from './abstractAdapter';
+import { ITestCase } from '@src/models/ITestCase';
 
 export interface IUnnormalizedTestCase {
   readonly id: string;

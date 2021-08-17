@@ -1,5 +1,5 @@
-import { IBuild } from '@src/models/IBuild';
 import { AbstractAdapter } from './abstractAdapter';
+import { IBuild } from '@src/models/IBuild';
 
 export interface IUnnormalizedBuild {
   readonly id: string;

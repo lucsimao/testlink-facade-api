@@ -1,5 +1,5 @@
-import { ITestProject } from '@src/models/ITestProject';
 import { AbstractAdapter } from './abstractAdapter';
+import { ITestProject } from '@src/models/ITestProject';
 
 export interface IUnnormalizedTestProject {
   readonly id: string;

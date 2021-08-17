@@ -1,5 +1,5 @@
-import { ITestPlan } from '@src/models/ITestPlan';
 import { AbstractAdapter } from './abstractAdapter';
+import { ITestPlan } from '@src/models/ITestPlan';
 
 export interface IUnnormalizedTestPlan {
   readonly id: string;

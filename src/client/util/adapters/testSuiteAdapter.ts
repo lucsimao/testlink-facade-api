@@ -1,5 +1,5 @@
-import { ITestSuite } from '@src/models/ITestSuite';
 import { AbstractAdapter } from './abstractAdapter';
+import { ITestSuite } from '@src/models/ITestSuite';
 
 export interface IUnnormalizedTestSuite {
   readonly id: string;
@@ -7,7 +7,7 @@ export interface IUnnormalizedTestSuite {
   readonly parent_id: string;
 }
 
-export class TestPlanAdapter extends AbstractAdapter<
+export class TestSuiteAdapter extends AbstractAdapter<
   IUnnormalizedTestSuite,
   ITestSuite
 > {
