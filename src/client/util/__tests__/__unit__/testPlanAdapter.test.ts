@@ -1,7 +1,7 @@
 import {
   IUnnormalizedTestPlan,
   TestPlanAdapter,
-} from '@src/client/util/adapters/TestPlanAdapter';
+} from '@src/client/util/adapters/testPlanAdapter';
 
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import normalizedTestPlanFixture from '@test/fixtures/normalized/testPlan.json';

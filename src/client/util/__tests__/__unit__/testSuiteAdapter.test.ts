@@ -1,7 +1,7 @@
 import {
   IUnnormalizedTestSuite,
   TestSuiteAdapter,
-} from '@src/client/util/adapters/TestSuiteAdapter';
+} from '@src/client/util/adapters/testSuiteAdapter';
 
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import normalizedTestSuiteFixture from '@test/fixtures/normalized/testSuite.json';
