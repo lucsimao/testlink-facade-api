@@ -1,23 +1,31 @@
 import './util/module-alias';
+
+import * as OpenApiValidator from 'express-openapi-validator';
+
 import { Application, json } from 'express';
-import { BuildController } from './controllers/builds';
+
+import { BuildController } from '@src/controllers/builds';
+import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import { Server } from '@overnightjs/core';
-import { TestCaseController } from './controllers/testCases';
-import { TestPlanController } from './controllers/testPlans';
-import { TestProjectController } from './controllers/testProjects';
-import { TestSuiteController } from './controllers/testSuites';
+import { TestCaseController } from '@src/controllers/testCases';
+import { TestPlanController } from '@src/controllers/testPlans';
+import { TestProjectController } from '@src/controllers/testProjects';
+import { TestSuiteController } from '@src/controllers/testSuites';
+import apiSchema from '@src/api.schema.json';
+import swaggerUi from 'swagger-ui-express';
 
 export class SetupServer extends Server {
-  constructor() {
+  constructor(private port = 3000) {
     super();
   }
 
-  public init(): void {
-    this.setupExpress();
+  public async init(): Promise<void> {
+    await this.setupExpress();
   }
 
-  private setupExpress(): void {
+  private async setupExpress(): Promise<void> {
     this.app.use(json());
+    await this.docsSetup();
     this.setupControllers();
   }
 
@@ -34,5 +42,20 @@ export class SetupServer extends Server {
 
   public getApp(): Application {
     return this.app;
+  }
+
+  public start(): void {
+    this.app.listen(this.port);
+  }
+
+  private async docsSetup(): Promise<void> {
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
+    this.app.use(
+      await OpenApiValidator.middleware({
+        apiSpec: apiSchema as OpenAPIV3.Document,
+        validateRequests: true,
+        validateResponses: true,
+      })
+    );
   }
 }

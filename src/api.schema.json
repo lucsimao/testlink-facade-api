@@ -1,0 +1,389 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.3.0",
+    "title": "Testlink Facade API",
+    "description": "A REST Testlink API",
+    "termsOfService": "http://api_url/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/builds": {
+      "get": {
+        "description": "Get the build from a testPlan",
+        "operationId": "getBuilds",
+        "parameters": [
+          {
+            "name": "testlink-api-key",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-api-key"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-port",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-port"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-url",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-url"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "test-plan-id",
+            "schema": {
+              "$ref": "#/components/schemas/test-plan-id"
+            },
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of the builds ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Builds"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testCases": {
+      "get": {
+        "description": "Get the testCases from a testProject",
+        "operationId": "getTestCases",
+        "parameters": [
+          {
+            "name": "testlink-api-key",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-api-key"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-port",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-port"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-url",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-url"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "test-project-id",
+            "schema": {
+              "$ref": "#/components/schemas/test-project-id"
+            },
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of the testProjects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestProjects"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testPlans": {
+      "get": {
+        "description": "Get the testPlans from a testProject",
+        "operationId": "getTestPlans",
+        "parameters": [
+          {
+            "name": "testlink-api-key",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-api-key"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-port",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-port"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-url",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-url"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "test-project-id",
+            "schema": {
+              "$ref": "#/components/schemas/test-project-id"
+            },
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of the testPlans",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestPlans"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testProjects": {
+      "get": {
+        "description": "Get the testProjects from a user",
+        "operationId": "getTestProjects",
+        "parameters": [
+          {
+            "name": "testlink-api-key",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-api-key"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-port",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-port"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-url",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-url"
+            },
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of the testProject",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestProjects"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/testSuites": {
+      "get": {
+        "description": "Get the testSuites from a testPlan",
+        "operationId": "getTestSuites",
+        "parameters": [
+          {
+            "name": "testlink-api-key",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-api-key"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-port",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-port"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "testlink-url",
+            "schema": {
+              "$ref": "#/components/schemas/testlink-url"
+            },
+            "in": "header",
+            "required": true
+          },
+          {
+            "name": "test-plan-id",
+            "schema": {
+              "$ref": "#/components/schemas/test-plan-id"
+            },
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of the testSuites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestSuites"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "testlink-api-key": {
+        "type": "string",
+        "example": "6e204ef53aecd003c19f2a89178ba60b"
+      },
+      "testlink-url": {
+        "type": "string",
+        "example": "localhost"
+      },
+      "testlink-port": {
+        "type": "number",
+        "example": 80
+      },
+      "id": {
+        "type": "number",
+        "example": 1
+      },
+      "name": {
+        "type": "string",
+        "example": "name-example"
+      },
+      "notes": {
+        "type": "string",
+        "example": "notes-example"
+      },
+      "test-plan-id": {
+        "type": "number",
+        "example": 2
+      },
+      "test-project-id": {
+        "type": "number",
+        "example": 1
+      },
+      "Builds": {
+        "type": "array",
+        "items": {
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "name": {
+              "$ref": "#/components/schemas/name"
+            },
+            "notes": {
+              "$ref": "#/components/schemas/notes"
+            },
+            "testPlanId": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        }
+      },
+      "TestProjects": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "name": {
+              "$ref": "#/components/schemas/name"
+            },
+            "prefix": {
+              "type": "string",
+              "example": "tce-"
+            },
+            "apiKey": {
+              "$ref": "#/components/schemas/testlink-api-key"
+            }
+          }
+        }
+      },
+      "TestPlans": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "name": {
+              "$ref": "#/components/schemas/name"
+            },
+            "testProjectId": {
+              "$ref": "#/components/schemas/id"
+            },
+            "apiKey": {
+              "$ref": "#/components/schemas/testlink-api-key"
+            },
+            "notes": {
+              "$ref": "#/components/schemas/notes"
+            }
+          }
+        }
+      },
+      "TestSuites": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "$ref": "#/components/schemas/id"
+            },
+            "name": {
+              "$ref": "#/components/schemas/name"
+            },
+            "parentId": {
+              "$ref": "#/components/schemas/id"
+            }
+          }
+        }
+      }
+    }
+  }
+}
