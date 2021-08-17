@@ -9,14 +9,14 @@ import {
 
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import { AxiosRequestConfig } from 'axios';
-import { BuildAdapter } from './util/adapters/buildAdapter';
+import { BuildAdapter } from '@src/client/util/adapters/buildAdapter';
 import { IBuild } from '@src/models/IBuild';
 import { ITestCase } from '@src/models/ITestCase';
 import { ITestPlan } from '@src/models/ITestPlan';
 import { ITestProject } from '@src/models/ITestProject';
 import { ITestSuite } from '@src/models/ITestSuite';
-import { TestPlanAdapter } from './util/adapters/TestPlanAdapter';
-import { TestSuiteAdapter } from './util/adapters/testSuiteAdapter';
+import { TestPlanAdapter } from './util/adapters/testPlanAdapter';
+import { TestSuiteAdapter } from '@src/client/util/adapters/testSuiteAdapter';
 
 export class TestlinkClient {
   public async getMe(requestConfig: AxiosRequestConfig): Promise<unknown> {
