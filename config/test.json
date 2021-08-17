@@ -2,7 +2,8 @@
   "App": {
     "port": "3000",
     "testlink": {
-      "url": "http://localhost:80/lib/api/rest/v2",
+      "url": "localhost",
+      "port": 80,
       "apikey": "6e204ef53aecd003c19f2a89178ba60b"
     }
   }
