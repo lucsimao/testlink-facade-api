@@ -1,13 +1,13 @@
--- MySQL dump 10.19  Distrib 10.3.30-MariaDB, for Linux (x86_64)
+-- MariaDB dump 10.19  Distrib 10.6.3-MariaDB, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: bitnami_testlink
 -- ------------------------------------------------------
--- Server version	10.3.30-MariaDB
+-- Server version	10.6.3-MariaDB-1:10.6.3+maria~focal
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES UTF8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -26,7 +26,7 @@ CREATE TABLE `assignment_status` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` varchar(100) NOT NULL DEFAULT 'unknown',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,7 +51,7 @@ CREATE TABLE `assignment_types` (
   `fk_table` varchar(30) DEFAULT '',
   `description` varchar(100) NOT NULL DEFAULT 'unknown',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -86,7 +86,7 @@ CREATE TABLE `attachments` (
   `compression_type` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `attachments_idx1` (`fk_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,12 +109,12 @@ CREATE TABLE `baseline_l1l2_context` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `testplan_id` int(10) unsigned NOT NULL DEFAULT 0,
   `platform_id` int(10) unsigned NOT NULL DEFAULT 0,
-  `being_exec_ts` timestamp NOT NULL,
-  `end_exec_ts` timestamp NOT NULL,
+  `being_exec_ts` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `end_exec_ts` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `creation_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `udx1` (`testplan_id`,`platform_id`,`creation_ts`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +143,7 @@ CREATE TABLE `baseline_l1l2_details` (
   `total_tc` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `udx1` (`context_id`,`top_tsuite_id`,`child_tsuite_id`,`status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,7 +180,7 @@ CREATE TABLE `builds` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`testplan_id`,`name`),
   KEY `testplan_id` (`testplan_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Available builds';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COMMENT='Available builds';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +206,7 @@ CREATE TABLE `cfield_build_design_values` (
   `value` varchar(4000) NOT NULL DEFAULT '',
   PRIMARY KEY (`field_id`,`node_id`),
   KEY `idx_cfield_build_design_values` (`node_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -231,7 +231,7 @@ CREATE TABLE `cfield_design_values` (
   `value` varchar(4000) NOT NULL DEFAULT '',
   PRIMARY KEY (`field_id`,`node_id`),
   KEY `idx_cfield_design_values` (`node_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -257,7 +257,7 @@ CREATE TABLE `cfield_execution_values` (
   `tcversion_id` int(10) NOT NULL DEFAULT 0,
   `value` varchar(4000) NOT NULL DEFAULT '',
   PRIMARY KEY (`field_id`,`execution_id`,`testplan_id`,`tcversion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -281,7 +281,7 @@ CREATE TABLE `cfield_node_types` (
   `node_type_id` int(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`field_id`,`node_type_id`),
   KEY `idx_custom_fields_assign` (`node_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -306,7 +306,7 @@ CREATE TABLE `cfield_testplan_design_values` (
   `value` varchar(4000) NOT NULL DEFAULT '',
   PRIMARY KEY (`field_id`,`link_id`),
   KEY `idx_cfield_tplan_design_val` (`link_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -336,7 +336,7 @@ CREATE TABLE `cfield_testprojects` (
   `required_on_execution` tinyint(1) NOT NULL DEFAULT 0,
   `monitorable` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`field_id`,`testproject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -362,7 +362,7 @@ CREATE TABLE `codetrackers` (
   `cfg` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `codetrackers_uidx1` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -399,7 +399,7 @@ CREATE TABLE `custom_fields` (
   `enable_on_testplan_design` tinyint(3) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_custom_fields_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -423,7 +423,7 @@ CREATE TABLE `db_version` (
   `upgrade_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   `notes` text DEFAULT NULL,
   PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -456,7 +456,7 @@ CREATE TABLE `events` (
   PRIMARY KEY (`id`),
   KEY `transaction_id` (`transaction_id`),
   KEY `fired_at` (`fired_at`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -465,7 +465,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
-INSERT INTO `events` VALUES (1,1,16,'GUI','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:21:\"audit_login_succeeded\";s:6:\"params\";a:2:{i:0;s:4:\"user\";i:1;s:12:\"192.168.16.1\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1627963553,'LOGIN',1,'users'),(2,2,32,'GUI','string \'testproject_code_tracker_integration\' is not localized for locale \'en_US\'  - using en_GB',1627963553,'LOCALIZATION',0,NULL),(3,2,32,'GUI','string \'code_tracker\' is not localized for locale \'en_US\'  - using en_GB',1627963553,'LOCALIZATION',0,NULL),(4,2,32,'GUI','string \'no_codetracker_defined\' is not localized for locale \'en_US\'  - using en_GB',1627963553,'LOCALIZATION',0,NULL),(5,3,16,'GUI - Test Project ID : 1','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:25:\"audit_testproject_created\";s:6:\"params\";a:1:{i:0;s:20:\"test-project-example\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1627963580,'CREATE',1,'testprojects'),(6,3,32,'GUI - Test Project ID : 1','string \'th_codetracker\' is not localized for locale \'en_US\'  - using en_GB',1627963580,'LOCALIZATION',0,NULL),(7,4,2,'GUI - Test Project ID : 1','E_WARNING\nsizeof(): Parameter must be an array or an object that implements Countable - in /opt/bitnami/testlink/lib/functions/object.class.php - Line 600',1627963590,'PHP',0,NULL),(8,5,2,'GUI - Test Project ID : 1','E_WARNING\nsizeof(): Parameter must be an array or an object that implements Countable - in /opt/bitnami/testlink/lib/functions/object.class.php - Line 600',1627963593,'PHP',0,NULL),(9,6,32,'GUI - Test Project ID : 1','string \'poweredBy\' is not localized for locale \'en_US\'  - using en_GB',1627963595,'LOCALIZATION',0,NULL),(10,6,32,'GUI - Test Project ID : 1','string \'system_descr\' is not localized for locale \'en_US\'  - using en_GB',1627963595,'LOCALIZATION',0,NULL),(11,6,32,'GUI - Test Project ID : 1','string \'href_codetracker_management\' is not localized for locale \'en_US\'  - using en_GB',1627963595,'LOCALIZATION',0,NULL),(12,7,32,'GUI - Test Project ID : 1','string \'file_upload_ko\' is not localized for locale \'en_US\'  - using en_GB',1627963602,'LOCALIZATION',0,NULL),(13,7,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/5760ab2fbcb6be6f977f78c58e2ad16e85ecd1e3_0.file.planEdit.tpl.php - Line 130',1627963602,'PHP',0,NULL),(14,7,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$itemID - in /opt/bitnami/testlink/gui/templates_c/5760ab2fbcb6be6f977f78c58e2ad16e85ecd1e3_0.file.planEdit.tpl.php - Line 152',1627963602,'PHP',0,NULL),(15,8,16,'GUI - Test Project ID : 1','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:22:\"audit_testplan_created\";s:6:\"params\";a:2:{i:0;s:20:\"test-project-example\";i:1;s:17:\"test-plan-example\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1627963612,'CREATED',2,'testplans'),(16,9,32,'GUI - Test Project ID : 1','string \'commit_id\' is not localized for locale \'en_US\'  - using en_GB',1627963626,'LOCALIZATION',0,NULL),(17,9,32,'GUI - Test Project ID : 1','string \'branch\' is not localized for locale \'en_US\'  - using en_GB',1627963626,'LOCALIZATION',0,NULL),(18,9,32,'GUI - Test Project ID : 1','string \'tag\' is not localized for locale \'en_US\'  - using en_GB',1627963626,'LOCALIZATION',0,NULL),(19,9,32,'GUI - Test Project ID : 1','string \'release_candidate\' is not localized for locale \'en_US\'  - using en_GB',1627963626,'LOCALIZATION',0,NULL),(20,10,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$creation_ts - in /opt/bitnami/testlink/lib/plan/buildEdit.php - Line 390',1627963632,'PHP',0,NULL),(21,10,16,'GUI - Test Project ID : 1','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:19:\"audit_build_created\";s:6:\"params\";a:3:{i:0;s:20:\"test-project-example\";i:1;s:17:\"test-plan-example\";i:2;s:13:\"build-example\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1627963632,'CREATE',1,'builds'),(22,11,32,'GUI - Test Project ID : 1','string \'without_platforms\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(23,11,32,'GUI - Test Project ID : 1','string \'exec_tree_counters_logic\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(24,11,32,'GUI - Test Project ID : 1','string \'platforms\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(25,11,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1627963641,'PHP',0,NULL),(26,12,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/a826a56ec1cd6f3a879499ad99bfecc2df857da3_0.file.containerView.tpl.php - Line 123',1627963641,'PHP',0,NULL),(27,12,32,'GUI - Test Project ID : 1','string \'allowed_files\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(28,12,32,'GUI - Test Project ID : 1','string \'allowed_filenames_regexp\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(29,13,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/a826a56ec1cd6f3a879499ad99bfecc2df857da3_0.file.containerView.tpl.php - Line 123',1627963643,'PHP',0,NULL),(30,14,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1627963661,'PHP',0,NULL),(31,15,32,'GUI - Test Project ID : 1','string \'btn_add_to_testsuites_deep\' is not localized for locale \'en_US\'  - using en_GB',1627963662,'LOCALIZATION',0,NULL),(32,15,32,'GUI - Test Project ID : 1','string \'select_keywords\' is not localized for locale \'en_US\'  - using en_GB',1627963662,'LOCALIZATION',0,NULL),(33,16,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/lib/testcases/testcaseCommands.class.php - Line 1129',1627963683,'PHP',0,NULL),(34,16,32,'GUI - Test Project ID : 1','string \'updateLinkToThisTCVersion\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(35,16,32,'GUI - Test Project ID : 1','string \'btn_new_version_from_latest\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(36,16,32,'GUI - Test Project ID : 1','string \'code_mgmt\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(37,16,32,'GUI - Test Project ID : 1','string \'code_link_tl_to_cts\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(38,16,32,'GUI - Test Project ID : 1','string \'can_not_edit_frozen_tc\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(39,16,32,'GUI - Test Project ID : 1','string \'testcase_version_operations\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(40,16,32,'GUI - Test Project ID : 1','string \'createKW\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(41,16,32,'GUI - Test Project ID : 1','string \'btn_create_and_link\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(42,16,32,'GUI - Test Project ID : 1','string \'img_title_remove_platform\' is not localized for locale \'en_US\' ',1627963684,'LOCALIZATION',0,NULL),(43,16,32,'GUI - Test Project ID : 1','string \'select_platforms\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(44,16,32,'GUI - Test Project ID : 1','string \'remove_plat_msgbox_msg\' is not localized for locale \'en_US\' ',1627963684,'LOCALIZATION',0,NULL),(45,16,32,'GUI - Test Project ID : 1','string \'remove_plat_msgbox_title\' is not localized for locale \'en_US\' ',1627963684,'LOCALIZATION',0,NULL),(46,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_a_frozen_relation\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(47,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_frozen_tc\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(48,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_because_this_is_not_the_latest\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(49,16,32,'GUI - Test Project ID : 1','string \'this_tcversion\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(50,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_tcversion_frozen\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(51,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_related_tcversion_frozen\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(52,17,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1627963684,'PHP',0,NULL);
+INSERT INTO `events` VALUES (1,1,16,'GUI','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:21:\"audit_login_succeeded\";s:6:\"params\";a:2:{i:0;s:4:\"user\";i:1;s:12:\"192.168.16.1\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1627963553,'LOGIN',1,'users'),(2,2,32,'GUI','string \'testproject_code_tracker_integration\' is not localized for locale \'en_US\'  - using en_GB',1627963553,'LOCALIZATION',0,NULL),(3,2,32,'GUI','string \'code_tracker\' is not localized for locale \'en_US\'  - using en_GB',1627963553,'LOCALIZATION',0,NULL),(4,2,32,'GUI','string \'no_codetracker_defined\' is not localized for locale \'en_US\'  - using en_GB',1627963553,'LOCALIZATION',0,NULL),(5,3,16,'GUI - Test Project ID : 1','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:25:\"audit_testproject_created\";s:6:\"params\";a:1:{i:0;s:20:\"test-project-example\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1627963580,'CREATE',1,'testprojects'),(6,3,32,'GUI - Test Project ID : 1','string \'th_codetracker\' is not localized for locale \'en_US\'  - using en_GB',1627963580,'LOCALIZATION',0,NULL),(7,4,2,'GUI - Test Project ID : 1','E_WARNING\nsizeof(): Parameter must be an array or an object that implements Countable - in /opt/bitnami/testlink/lib/functions/object.class.php - Line 600',1627963590,'PHP',0,NULL),(8,5,2,'GUI - Test Project ID : 1','E_WARNING\nsizeof(): Parameter must be an array or an object that implements Countable - in /opt/bitnami/testlink/lib/functions/object.class.php - Line 600',1627963593,'PHP',0,NULL),(9,6,32,'GUI - Test Project ID : 1','string \'poweredBy\' is not localized for locale \'en_US\'  - using en_GB',1627963595,'LOCALIZATION',0,NULL),(10,6,32,'GUI - Test Project ID : 1','string \'system_descr\' is not localized for locale \'en_US\'  - using en_GB',1627963595,'LOCALIZATION',0,NULL),(11,6,32,'GUI - Test Project ID : 1','string \'href_codetracker_management\' is not localized for locale \'en_US\'  - using en_GB',1627963595,'LOCALIZATION',0,NULL),(12,7,32,'GUI - Test Project ID : 1','string \'file_upload_ko\' is not localized for locale \'en_US\'  - using en_GB',1627963602,'LOCALIZATION',0,NULL),(13,7,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/5760ab2fbcb6be6f977f78c58e2ad16e85ecd1e3_0.file.planEdit.tpl.php - Line 130',1627963602,'PHP',0,NULL),(14,7,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$itemID - in /opt/bitnami/testlink/gui/templates_c/5760ab2fbcb6be6f977f78c58e2ad16e85ecd1e3_0.file.planEdit.tpl.php - Line 152',1627963602,'PHP',0,NULL),(15,8,16,'GUI - Test Project ID : 1','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:22:\"audit_testplan_created\";s:6:\"params\";a:2:{i:0;s:20:\"test-project-example\";i:1;s:17:\"test-plan-example\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1627963612,'CREATED',2,'testplans'),(16,9,32,'GUI - Test Project ID : 1','string \'commit_id\' is not localized for locale \'en_US\'  - using en_GB',1627963626,'LOCALIZATION',0,NULL),(17,9,32,'GUI - Test Project ID : 1','string \'branch\' is not localized for locale \'en_US\'  - using en_GB',1627963626,'LOCALIZATION',0,NULL),(18,9,32,'GUI - Test Project ID : 1','string \'tag\' is not localized for locale \'en_US\'  - using en_GB',1627963626,'LOCALIZATION',0,NULL),(19,9,32,'GUI - Test Project ID : 1','string \'release_candidate\' is not localized for locale \'en_US\'  - using en_GB',1627963626,'LOCALIZATION',0,NULL),(20,10,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$creation_ts - in /opt/bitnami/testlink/lib/plan/buildEdit.php - Line 390',1627963632,'PHP',0,NULL),(21,10,16,'GUI - Test Project ID : 1','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:19:\"audit_build_created\";s:6:\"params\";a:3:{i:0;s:20:\"test-project-example\";i:1;s:17:\"test-plan-example\";i:2;s:13:\"build-example\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1627963632,'CREATE',1,'builds'),(22,11,32,'GUI - Test Project ID : 1','string \'without_platforms\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(23,11,32,'GUI - Test Project ID : 1','string \'exec_tree_counters_logic\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(24,11,32,'GUI - Test Project ID : 1','string \'platforms\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(25,11,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1627963641,'PHP',0,NULL),(26,12,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/a826a56ec1cd6f3a879499ad99bfecc2df857da3_0.file.containerView.tpl.php - Line 123',1627963641,'PHP',0,NULL),(27,12,32,'GUI - Test Project ID : 1','string \'allowed_files\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(28,12,32,'GUI - Test Project ID : 1','string \'allowed_filenames_regexp\' is not localized for locale \'en_US\'  - using en_GB',1627963641,'LOCALIZATION',0,NULL),(29,13,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/a826a56ec1cd6f3a879499ad99bfecc2df857da3_0.file.containerView.tpl.php - Line 123',1627963643,'PHP',0,NULL),(30,14,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1627963661,'PHP',0,NULL),(31,15,32,'GUI - Test Project ID : 1','string \'btn_add_to_testsuites_deep\' is not localized for locale \'en_US\'  - using en_GB',1627963662,'LOCALIZATION',0,NULL),(32,15,32,'GUI - Test Project ID : 1','string \'select_keywords\' is not localized for locale \'en_US\'  - using en_GB',1627963662,'LOCALIZATION',0,NULL),(33,16,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/lib/testcases/testcaseCommands.class.php - Line 1129',1627963683,'PHP',0,NULL),(34,16,32,'GUI - Test Project ID : 1','string \'updateLinkToThisTCVersion\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(35,16,32,'GUI - Test Project ID : 1','string \'btn_new_version_from_latest\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(36,16,32,'GUI - Test Project ID : 1','string \'code_mgmt\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(37,16,32,'GUI - Test Project ID : 1','string \'code_link_tl_to_cts\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(38,16,32,'GUI - Test Project ID : 1','string \'can_not_edit_frozen_tc\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(39,16,32,'GUI - Test Project ID : 1','string \'testcase_version_operations\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(40,16,32,'GUI - Test Project ID : 1','string \'createKW\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(41,16,32,'GUI - Test Project ID : 1','string \'btn_create_and_link\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(42,16,32,'GUI - Test Project ID : 1','string \'img_title_remove_platform\' is not localized for locale \'en_US\' ',1627963684,'LOCALIZATION',0,NULL),(43,16,32,'GUI - Test Project ID : 1','string \'select_platforms\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(44,16,32,'GUI - Test Project ID : 1','string \'remove_plat_msgbox_msg\' is not localized for locale \'en_US\' ',1627963684,'LOCALIZATION',0,NULL),(45,16,32,'GUI - Test Project ID : 1','string \'remove_plat_msgbox_title\' is not localized for locale \'en_US\' ',1627963684,'LOCALIZATION',0,NULL),(46,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_a_frozen_relation\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(47,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_frozen_tc\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(48,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_because_this_is_not_the_latest\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(49,16,32,'GUI - Test Project ID : 1','string \'this_tcversion\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(50,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_tcversion_frozen\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(51,16,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_related_tcversion_frozen\' is not localized for locale \'en_US\'  - using en_GB',1627963684,'LOCALIZATION',0,NULL),(52,17,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1627963684,'PHP',0,NULL),(53,18,16,'GUI - Test Project ID : 1','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:21:\"audit_login_succeeded\";s:6:\"params\";a:2:{i:0;s:4:\"user\";i:1;s:10:\"172.18.0.1\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1628565804,'LOGIN',1,'users'),(54,19,32,'GUI - Test Project ID : 1','string \'poweredBy\' is not localized for locale \'en_US\'  - using en_GB',1628565804,'LOCALIZATION',0,NULL),(55,19,32,'GUI - Test Project ID : 1','string \'system_descr\' is not localized for locale \'en_US\'  - using en_GB',1628565804,'LOCALIZATION',0,NULL),(56,19,32,'GUI - Test Project ID : 1','string \'href_codetracker_management\' is not localized for locale \'en_US\'  - using en_GB',1628565804,'LOCALIZATION',0,NULL),(57,20,32,'GUI - Test Project ID : 1','string \'file_upload_ko\' is not localized for locale \'en_US\'  - using en_GB',1628565807,'LOCALIZATION',0,NULL),(58,20,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/a826a56ec1cd6f3a879499ad99bfecc2df857da3_0.file.containerView.tpl.php - Line 123',1628565807,'PHP',0,NULL),(59,20,32,'GUI - Test Project ID : 1','string \'allowed_files\' is not localized for locale \'en_US\'  - using en_GB',1628565808,'LOCALIZATION',0,NULL),(60,20,32,'GUI - Test Project ID : 1','string \'allowed_filenames_regexp\' is not localized for locale \'en_US\'  - using en_GB',1628565808,'LOCALIZATION',0,NULL),(61,21,32,'GUI - Test Project ID : 1','string \'without_platforms\' is not localized for locale \'en_US\'  - using en_GB',1628565808,'LOCALIZATION',0,NULL),(62,21,32,'GUI - Test Project ID : 1','string \'exec_tree_counters_logic\' is not localized for locale \'en_US\'  - using en_GB',1628565808,'LOCALIZATION',0,NULL),(63,21,32,'GUI - Test Project ID : 1','string \'platforms\' is not localized for locale \'en_US\'  - using en_GB',1628565808,'LOCALIZATION',0,NULL),(64,21,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1628565808,'PHP',0,NULL),(65,22,32,'GUI - Test Project ID : 1','string \'updateLinkToThisTCVersion\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(66,22,32,'GUI - Test Project ID : 1','string \'btn_new_version_from_latest\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(67,22,32,'GUI - Test Project ID : 1','string \'code_mgmt\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(68,22,32,'GUI - Test Project ID : 1','string \'code_link_tl_to_cts\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(69,22,32,'GUI - Test Project ID : 1','string \'can_not_edit_frozen_tc\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(70,22,32,'GUI - Test Project ID : 1','string \'testcase_version_operations\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(71,22,32,'GUI - Test Project ID : 1','string \'select_keywords\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(72,22,32,'GUI - Test Project ID : 1','string \'createKW\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(73,22,32,'GUI - Test Project ID : 1','string \'btn_create_and_link\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(74,22,32,'GUI - Test Project ID : 1','string \'img_title_remove_platform\' is not localized for locale \'en_US\' ',1628565811,'LOCALIZATION',0,NULL),(75,22,32,'GUI - Test Project ID : 1','string \'select_platforms\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(76,22,32,'GUI - Test Project ID : 1','string \'remove_plat_msgbox_msg\' is not localized for locale \'en_US\' ',1628565811,'LOCALIZATION',0,NULL),(77,22,32,'GUI - Test Project ID : 1','string \'remove_plat_msgbox_title\' is not localized for locale \'en_US\' ',1628565811,'LOCALIZATION',0,NULL),(78,22,32,'GUI - Test Project ID : 1','string \'can_not_delete_a_frozen_relation\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(79,22,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_frozen_tc\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(80,22,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_because_this_is_not_the_latest\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(81,22,32,'GUI - Test Project ID : 1','string \'this_tcversion\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(82,22,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_tcversion_frozen\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(83,22,32,'GUI - Test Project ID : 1','string \'can_not_delete_relation_related_tcversion_frozen\' is not localized for locale \'en_US\'  - using en_GB',1628565811,'LOCALIZATION',0,NULL),(84,23,32,'GUI - Test Project ID : 1','string \'btn_add_to_testsuites_deep\' is not localized for locale \'en_US\'  - using en_GB',1628565815,'LOCALIZATION',0,NULL),(85,24,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1628565821,'PHP',0,NULL),(86,25,32,'GUI - Test Project ID : 1','string \'note_platform_filter\' is not localized for locale \'en_US\'  - using en_GB',1628565823,'LOCALIZATION',0,NULL),(87,26,16,'GUI - Test Project ID : 1','O:18:\"tlMetaStringHelper\":4:{s:5:\"label\";s:26:\"audit_tc_added_to_testplan\";s:6:\"params\";a:3:{i:0;s:26:\"tpe--1 : test-case-example\";i:1;s:1:\"1\";i:2;s:17:\"test-plan-example\";}s:13:\"bDontLocalize\";b:0;s:14:\"bDontFireEvent\";b:0;}',1628565827,'ASSIGN',2,'testplans'),(88,27,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1628565827,'PHP',0,NULL),(89,28,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1628565946,'PHP',0,NULL),(90,29,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/a826a56ec1cd6f3a879499ad99bfecc2df857da3_0.file.containerView.tpl.php - Line 123',1628565946,'PHP',0,NULL),(91,30,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined property: stdClass::$uploadOp - in /opt/bitnami/testlink/gui/templates_c/a826a56ec1cd6f3a879499ad99bfecc2df857da3_0.file.containerView.tpl.php - Line 123',1628565950,'PHP',0,NULL),(92,31,2,'GUI - Test Project ID : 1','E_NOTICE\nUndefined index: size - in /opt/bitnami/testlink/gui/templates_c/12a82239248d9e8bd2a95f9018e8967b73321817_0.file.inc_filter_panel.tpl.php - Line 351',1628565958,'PHP',0,NULL);
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -510,7 +510,7 @@ CREATE TABLE `execution_bugs` (
   `bug_id` varchar(64) NOT NULL DEFAULT '0',
   `tcstep_id` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`execution_id`,`bug_id`,`tcstep_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -537,7 +537,7 @@ CREATE TABLE `execution_tcsteps` (
   `status` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `execution_tcsteps_idx1` (`execution_id`,`tcstep_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -568,7 +568,7 @@ CREATE TABLE `execution_tcsteps_wip` (
   `status` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `execution_tcsteps_wip_idx1` (`tcstep_id`,`testplan_id`,`platform_id`,`build_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -604,7 +604,7 @@ CREATE TABLE `executions` (
   KEY `executions_idx1` (`testplan_id`,`tcversion_id`,`platform_id`,`build_id`),
   KEY `executions_idx2` (`execution_type`),
   KEY `executions_idx3` (`tcversion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -634,7 +634,7 @@ CREATE TABLE `inventory` (
   `modification_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `inventory_idx1` (`testproject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -660,7 +660,7 @@ CREATE TABLE `issuetrackers` (
   `cfg` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `issuetrackers_uidx1` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -688,7 +688,7 @@ CREATE TABLE `keywords` (
   UNIQUE KEY `keyword_testproject_id` (`keyword`,`testproject_id`),
   KEY `testproject_id` (`testproject_id`),
   KEY `keyword` (`keyword`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -763,63 +763,72 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary table structure for view `latest_req_version_id`
---
-
-DROP TABLE IF EXISTS `latest_req_version_id`;
-/*!50001 DROP VIEW IF EXISTS `latest_req_version_id`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `latest_req_version_id` (
-  `req_id` tinyint NOT NULL,
-  `version` tinyint NOT NULL,
-  `req_version_id` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
-
---
--- Temporary table structure for view `latest_rspec_revision`
+-- Table structure for table `latest_rspec_revision`
 --
 
 DROP TABLE IF EXISTS `latest_rspec_revision`;
-/*!50001 DROP VIEW IF EXISTS `latest_rspec_revision`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `latest_rspec_revision` (
-  `req_spec_id` tinyint NOT NULL,
-  `testproject_id` tinyint NOT NULL,
-  `revision` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `latest_rspec_revision` (
+  `req_spec_id` tinyint(4) NOT NULL,
+  `testproject_id` tinyint(4) NOT NULL,
+  `revision` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Temporary table structure for view `latest_tcase_version_id`
+-- Dumping data for table `latest_rspec_revision`
+--
+
+LOCK TABLES `latest_rspec_revision` WRITE;
+/*!40000 ALTER TABLE `latest_rspec_revision` DISABLE KEYS */;
+/*!40000 ALTER TABLE `latest_rspec_revision` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `latest_tcase_version_id`
 --
 
 DROP TABLE IF EXISTS `latest_tcase_version_id`;
-/*!50001 DROP VIEW IF EXISTS `latest_tcase_version_id`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `latest_tcase_version_id` (
-  `testcase_id` tinyint NOT NULL,
-  `version` tinyint NOT NULL,
-  `tcversion_id` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `latest_tcase_version_id` (
+  `testcase_id` tinyint(4) NOT NULL,
+  `version` tinyint(4) NOT NULL,
+  `tcversion_id` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Temporary table structure for view `latest_tcase_version_number`
+-- Dumping data for table `latest_tcase_version_id`
+--
+
+LOCK TABLES `latest_tcase_version_id` WRITE;
+/*!40000 ALTER TABLE `latest_tcase_version_id` DISABLE KEYS */;
+/*!40000 ALTER TABLE `latest_tcase_version_id` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `latest_tcase_version_number`
 --
 
 DROP TABLE IF EXISTS `latest_tcase_version_number`;
-/*!50001 DROP VIEW IF EXISTS `latest_tcase_version_number`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `latest_tcase_version_number` (
-  `testcase_id` tinyint NOT NULL,
-  `version` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `latest_tcase_version_number` (
+  `testcase_id` tinyint(4) NOT NULL,
+  `version` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `latest_tcase_version_number`
+--
+
+LOCK TABLES `latest_tcase_version_number` WRITE;
+/*!40000 ALTER TABLE `latest_tcase_version_number` DISABLE KEYS */;
+/*!40000 ALTER TABLE `latest_tcase_version_number` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `milestones`
@@ -840,7 +849,7 @@ CREATE TABLE `milestones` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name_testplan_id` (`name`,`testplan_id`),
   KEY `testplan_id` (`testplan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -863,7 +872,7 @@ CREATE TABLE `node_types` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` varchar(100) NOT NULL DEFAULT 'testproject',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -892,7 +901,7 @@ CREATE TABLE `nodes_hierarchy` (
   PRIMARY KEY (`id`),
   KEY `pid_m_nodeorder` (`parent_id`,`node_order`),
   KEY `nodes_hierarchy_node_type_id` (`node_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -919,7 +928,7 @@ CREATE TABLE `object_keywords` (
   `keyword_id` int(10) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `udx01_object_keywords` (`fk_id`,`fk_table`,`keyword_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -947,7 +956,7 @@ CREATE TABLE `platforms` (
   `enable_on_execution` tinyint(1) unsigned NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_platforms` (`testproject_id`,`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -973,7 +982,7 @@ CREATE TABLE `plugins` (
   `author_id` int(10) unsigned DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1001,7 +1010,7 @@ CREATE TABLE `plugins_configuration` (
   `author_id` int(10) unsigned DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1034,7 +1043,7 @@ CREATE TABLE `req_coverage` (
   `review_request_ts` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `req_coverage_full_link` (`req_id`,`req_version_id`,`testcase_id`,`tcversion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='relation test case version ** requirement version';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='relation test case version ** requirement version';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1058,7 +1067,7 @@ CREATE TABLE `req_monitor` (
   `user_id` int(11) NOT NULL,
   `testproject_id` int(11) NOT NULL,
   PRIMARY KEY (`req_id`,`user_id`,`testproject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1085,7 +1094,7 @@ CREATE TABLE `req_relations` (
   `author_id` int(10) unsigned DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1123,7 +1132,7 @@ CREATE TABLE `req_revisions` (
   `modification_ts` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `req_revisions_uidx1` (`parent_id`,`revision`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1149,7 +1158,7 @@ CREATE TABLE `req_specs` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `req_spec_uk1` (`doc_id`,`testproject_id`),
   KEY `testproject_id` (`testproject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Dev. Documents (e.g. System Requirements Specification)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Dev. Documents (e.g. System Requirements Specification)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1185,7 +1194,7 @@ CREATE TABLE `req_specs_revisions` (
   `modification_ts` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `req_specs_revisions_uidx1` (`parent_id`,`revision`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1220,7 +1229,7 @@ CREATE TABLE `req_versions` (
   `modification_ts` datetime NOT NULL DEFAULT current_timestamp(),
   `log_message` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1246,7 +1255,7 @@ CREATE TABLE `reqmgrsystems` (
   `cfg` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `reqmgrsystems_uidx1` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1271,7 +1280,7 @@ CREATE TABLE `requirements` (
   `req_doc_id` varchar(64) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `requirements_req_doc_id` (`srs_id`,`req_doc_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1295,7 +1304,7 @@ CREATE TABLE `rights` (
   `description` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `rights_descr` (`description`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1323,7 +1332,7 @@ CREATE TABLE `risk_assignments` (
   `importance` char(1) NOT NULL DEFAULT 'M',
   PRIMARY KEY (`id`),
   UNIQUE KEY `risk_assignments_tplan_node_id` (`testplan_id`,`node_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1346,7 +1355,7 @@ CREATE TABLE `role_rights` (
   `role_id` int(10) NOT NULL DEFAULT 0,
   `right_id` int(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`role_id`,`right_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1372,7 +1381,7 @@ CREATE TABLE `roles` (
   `notes` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_rights_roles_descr` (`description`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1400,7 +1409,7 @@ CREATE TABLE `tcsteps` (
   `active` tinyint(1) NOT NULL DEFAULT 1,
   `execution_type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 -> manual, 2 -> automated',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1437,7 +1446,7 @@ CREATE TABLE `tcversions` (
   `execution_type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1 -> manual, 2 -> automated',
   `estimated_exec_duration` decimal(6,2) DEFAULT NULL COMMENT 'NULL will be considered as NO DATA Provided by user',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1451,32 +1460,48 @@ INSERT INTO `tcversions` VALUES (5,1,1,1,1,'<p>summary-example</p>\r\n','<p>prec
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `tcversions_without_keywords`
+-- Table structure for table `tcversions_without_keywords`
 --
 
 DROP TABLE IF EXISTS `tcversions_without_keywords`;
-/*!50001 DROP VIEW IF EXISTS `tcversions_without_keywords`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `tcversions_without_keywords` (
-  `testcase_id` tinyint NOT NULL,
-  `id` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tcversions_without_keywords` (
+  `testcase_id` tinyint(4) NOT NULL,
+  `id` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Temporary table structure for view `tcversions_without_platforms`
+-- Dumping data for table `tcversions_without_keywords`
+--
+
+LOCK TABLES `tcversions_without_keywords` WRITE;
+/*!40000 ALTER TABLE `tcversions_without_keywords` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tcversions_without_keywords` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tcversions_without_platforms`
 --
 
 DROP TABLE IF EXISTS `tcversions_without_platforms`;
-/*!50001 DROP VIEW IF EXISTS `tcversions_without_platforms`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `tcversions_without_platforms` (
-  `testcase_id` tinyint NOT NULL,
-  `id` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tcversions_without_platforms` (
+  `testcase_id` tinyint(4) NOT NULL,
+  `id` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tcversions_without_platforms`
+--
+
+LOCK TABLES `tcversions_without_platforms` WRITE;
+/*!40000 ALTER TABLE `tcversions_without_platforms` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tcversions_without_platforms` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `testcase_keywords`
@@ -1493,7 +1518,7 @@ CREATE TABLE `testcase_keywords` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx01_testcase_keywords` (`testcase_id`,`tcversion_id`,`keyword_id`),
   KEY `idx02_testcase_keywords` (`tcversion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1520,7 +1545,7 @@ CREATE TABLE `testcase_platforms` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx01_testcase_platform` (`testcase_id`,`tcversion_id`,`platform_id`),
   KEY `idx02_testcase_platform` (`tcversion_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1548,7 +1573,7 @@ CREATE TABLE `testcase_relations` (
   `author_id` int(10) unsigned DEFAULT NULL,
   `creation_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1575,7 +1600,7 @@ CREATE TABLE `testcase_script_links` (
   `branch_name` varchar(64) DEFAULT NULL,
   `commit_id` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`tcversion_id`,`project_key`,`repository_name`,`code_path`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1601,7 +1626,7 @@ CREATE TABLE `testplan_platforms` (
   `active` tinyint(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_testplan_platforms` (`testplan_id`,`platform_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Connects a testplan with platforms';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Connects a testplan with platforms';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1631,7 +1656,7 @@ CREATE TABLE `testplan_tcversions` (
   `creation_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `testplan_tcversions_tplan_tcversion` (`testplan_id`,`tcversion_id`,`platform_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1640,6 +1665,7 @@ CREATE TABLE `testplan_tcversions` (
 
 LOCK TABLES `testplan_tcversions` WRITE;
 /*!40000 ALTER TABLE `testplan_tcversions` DISABLE KEYS */;
+INSERT INTO `testplan_tcversions` VALUES (1,2,5,10000,2,0,1,'2021-08-10 03:23:47');
 /*!40000 ALTER TABLE `testplan_tcversions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1661,7 +1687,7 @@ CREATE TABLE `testplans` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `testplans_api_key` (`api_key`),
   KEY `testplans_testproject_id_active` (`testproject_id`,`active`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1685,7 +1711,7 @@ CREATE TABLE `testproject_codetracker` (
   `testproject_id` int(10) unsigned NOT NULL,
   `codetracker_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`testproject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1708,7 +1734,7 @@ CREATE TABLE `testproject_issuetracker` (
   `testproject_id` int(10) unsigned NOT NULL,
   `issuetracker_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`testproject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1731,7 +1757,7 @@ CREATE TABLE `testproject_reqmgrsystem` (
   `testproject_id` int(10) unsigned NOT NULL,
   `reqmgrsystem_id` int(10) unsigned NOT NULL,
   PRIMARY KEY (`testproject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1770,7 +1796,7 @@ CREATE TABLE `testprojects` (
   UNIQUE KEY `testprojects_prefix` (`prefix`),
   UNIQUE KEY `testprojects_api_key` (`api_key`),
   KEY `testprojects_id_active` (`id`,`active`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1794,7 +1820,7 @@ CREATE TABLE `testsuites` (
   `id` int(10) unsigned NOT NULL,
   `details` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1823,7 +1849,7 @@ CREATE TABLE `text_templates` (
   `creation_ts` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_public` tinyint(1) NOT NULL DEFAULT 0,
   UNIQUE KEY `idx_text_templates` (`type`,`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Global Project Templates';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COMMENT='Global Project Templates';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1850,7 +1876,7 @@ CREATE TABLE `transactions` (
   `user_id` int(10) unsigned NOT NULL DEFAULT 0,
   `session_id` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1859,28 +1885,36 @@ CREATE TABLE `transactions` (
 
 LOCK TABLES `transactions` WRITE;
 /*!40000 ALTER TABLE `transactions` DISABLE KEYS */;
-INSERT INTO `transactions` VALUES (1,'/login.php',1627963553,1627963553,1,'qq7dp334fk5mtmcfbv37qfr1av'),(2,'/lib/project/projectEdit.php',1627963553,1627963553,1,'qq7dp334fk5mtmcfbv37qfr1av'),(3,'/lib/project/projectEdit.php',1627963580,1627963580,1,'qq7dp334fk5mtmcfbv37qfr1av'),(4,'/lib/usermanagement/userInfo.php',1627963590,1627963590,1,'qq7dp334fk5mtmcfbv37qfr1av'),(5,'/lib/usermanagement/userInfo.php',1627963593,1627963593,1,'qq7dp334fk5mtmcfbv37qfr1av'),(6,'/lib/general/mainPage.php',1627963595,1627963595,1,'qq7dp334fk5mtmcfbv37qfr1av'),(7,'/lib/plan/planEdit.php',1627963602,1627963602,1,'qq7dp334fk5mtmcfbv37qfr1av'),(8,'/lib/plan/planEdit.php',1627963612,1627963612,1,'qq7dp334fk5mtmcfbv37qfr1av'),(9,'/lib/plan/buildEdit.php',1627963626,1627963626,1,'qq7dp334fk5mtmcfbv37qfr1av'),(10,'/lib/plan/buildEdit.php',1627963632,1627963632,1,'qq7dp334fk5mtmcfbv37qfr1av'),(11,'/lib/testcases/listTestCases.php',1627963641,1627963641,1,'qq7dp334fk5mtmcfbv37qfr1av'),(12,'/lib/testcases/archiveData.php',1627963641,1627963641,1,'qq7dp334fk5mtmcfbv37qfr1av'),(13,'/lib/testcases/archiveData.php',1627963643,1627963643,1,'qq7dp334fk5mtmcfbv37qfr1av'),(14,'/lib/testcases/listTestCases.php',1627963661,1627963661,1,'qq7dp334fk5mtmcfbv37qfr1av'),(15,'/lib/testcases/archiveData.php',1627963662,1627963662,1,'qq7dp334fk5mtmcfbv37qfr1av'),(16,'/lib/testcases/tcEdit.php',1627963683,1627963684,1,'qq7dp334fk5mtmcfbv37qfr1av'),(17,'/lib/testcases/listTestCases.php',1627963684,1627963684,1,'qq7dp334fk5mtmcfbv37qfr1av');
+INSERT INTO `transactions` VALUES (1,'/login.php',1627963553,1627963553,1,'qq7dp334fk5mtmcfbv37qfr1av'),(2,'/lib/project/projectEdit.php',1627963553,1627963553,1,'qq7dp334fk5mtmcfbv37qfr1av'),(3,'/lib/project/projectEdit.php',1627963580,1627963580,1,'qq7dp334fk5mtmcfbv37qfr1av'),(4,'/lib/usermanagement/userInfo.php',1627963590,1627963590,1,'qq7dp334fk5mtmcfbv37qfr1av'),(5,'/lib/usermanagement/userInfo.php',1627963593,1627963593,1,'qq7dp334fk5mtmcfbv37qfr1av'),(6,'/lib/general/mainPage.php',1627963595,1627963595,1,'qq7dp334fk5mtmcfbv37qfr1av'),(7,'/lib/plan/planEdit.php',1627963602,1627963602,1,'qq7dp334fk5mtmcfbv37qfr1av'),(8,'/lib/plan/planEdit.php',1627963612,1627963612,1,'qq7dp334fk5mtmcfbv37qfr1av'),(9,'/lib/plan/buildEdit.php',1627963626,1627963626,1,'qq7dp334fk5mtmcfbv37qfr1av'),(10,'/lib/plan/buildEdit.php',1627963632,1627963632,1,'qq7dp334fk5mtmcfbv37qfr1av'),(11,'/lib/testcases/listTestCases.php',1627963641,1627963641,1,'qq7dp334fk5mtmcfbv37qfr1av'),(12,'/lib/testcases/archiveData.php',1627963641,1627963641,1,'qq7dp334fk5mtmcfbv37qfr1av'),(13,'/lib/testcases/archiveData.php',1627963643,1627963643,1,'qq7dp334fk5mtmcfbv37qfr1av'),(14,'/lib/testcases/listTestCases.php',1627963661,1627963661,1,'qq7dp334fk5mtmcfbv37qfr1av'),(15,'/lib/testcases/archiveData.php',1627963662,1627963662,1,'qq7dp334fk5mtmcfbv37qfr1av'),(16,'/lib/testcases/tcEdit.php',1627963683,1627963684,1,'qq7dp334fk5mtmcfbv37qfr1av'),(17,'/lib/testcases/listTestCases.php',1627963684,1627963684,1,'qq7dp334fk5mtmcfbv37qfr1av'),(18,'/login.php',1628565804,1628565804,1,'ug7ic73eoq7on3aso4mrrvttu8'),(19,'/lib/general/mainPage.php',1628565804,1628565804,1,'ug7ic73eoq7on3aso4mrrvttu8'),(20,'/lib/testcases/archiveData.php',1628565807,1628565808,1,'ug7ic73eoq7on3aso4mrrvttu8'),(21,'/lib/testcases/listTestCases.php',1628565808,1628565808,1,'ug7ic73eoq7on3aso4mrrvttu8'),(22,'/lib/testcases/archiveData.php',1628565811,1628565811,1,'ug7ic73eoq7on3aso4mrrvttu8'),(23,'/lib/testcases/archiveData.php',1628565815,1628565815,1,'ug7ic73eoq7on3aso4mrrvttu8'),(24,'/lib/plan/planAddTCNavigator.php',1628565821,1628565821,1,'ug7ic73eoq7on3aso4mrrvttu8'),(25,'/lib/plan/planAddTC.php',1628565823,1628565823,1,'ug7ic73eoq7on3aso4mrrvttu8'),(26,'/lib/plan/planAddTC.php',1628565827,1628565827,1,'ug7ic73eoq7on3aso4mrrvttu8'),(27,'/lib/plan/planAddTCNavigator.php',1628565827,1628565827,1,'ug7ic73eoq7on3aso4mrrvttu8'),(28,'/lib/testcases/listTestCases.php',1628565946,1628565946,1,'ug7ic73eoq7on3aso4mrrvttu8'),(29,'/lib/testcases/archiveData.php',1628565946,1628565946,1,'ug7ic73eoq7on3aso4mrrvttu8'),(30,'/lib/testcases/archiveData.php',1628565950,1628565950,1,'ug7ic73eoq7on3aso4mrrvttu8'),(31,'/lib/plan/planAddTCNavigator.php',1628565958,1628565958,1,'ug7ic73eoq7on3aso4mrrvttu8');
 /*!40000 ALTER TABLE `transactions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Temporary table structure for view `tsuites_tree_depth_2`
+-- Table structure for table `tsuites_tree_depth_2`
 --
 
 DROP TABLE IF EXISTS `tsuites_tree_depth_2`;
-/*!50001 DROP VIEW IF EXISTS `tsuites_tree_depth_2`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE TABLE `tsuites_tree_depth_2` (
-  `prefix` tinyint NOT NULL,
-  `testproject_name` tinyint NOT NULL,
-  `level1_name` tinyint NOT NULL,
-  `level2_name` tinyint NOT NULL,
-  `testproject_id` tinyint NOT NULL,
-  `level1_id` tinyint NOT NULL,
-  `level2_id` tinyint NOT NULL
-) ENGINE=MyISAM */;
-SET character_set_client = @saved_cs_client;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tsuites_tree_depth_2` (
+  `prefix` tinyint(4) NOT NULL,
+  `testproject_name` tinyint(4) NOT NULL,
+  `level1_name` tinyint(4) NOT NULL,
+  `level2_name` tinyint(4) NOT NULL,
+  `testproject_id` tinyint(4) NOT NULL,
+  `level1_id` tinyint(4) NOT NULL,
+  `level2_id` tinyint(4) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tsuites_tree_depth_2`
+--
+
+LOCK TABLES `tsuites_tree_depth_2` WRITE;
+/*!40000 ALTER TABLE `tsuites_tree_depth_2` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tsuites_tree_depth_2` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user_assignments`
@@ -1901,7 +1935,7 @@ CREATE TABLE `user_assignments` (
   `status` int(10) unsigned DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `user_assignments_feature_id` (`feature_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1926,7 +1960,7 @@ CREATE TABLE `user_group` (
   `description` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_user_group` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1949,7 +1983,7 @@ CREATE TABLE `user_group_assign` (
   `usergroup_id` int(10) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
   UNIQUE KEY `idx_user_group_assign` (`usergroup_id`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1973,7 +2007,7 @@ CREATE TABLE `user_testplan_roles` (
   `testplan_id` int(10) NOT NULL DEFAULT 0,
   `role_id` int(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_id`,`testplan_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1997,7 +2031,7 @@ CREATE TABLE `user_testproject_roles` (
   `testproject_id` int(10) NOT NULL DEFAULT 0,
   `role_id` int(10) NOT NULL DEFAULT 0,
   PRIMARY KEY (`user_id`,`testproject_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2035,7 +2069,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_login` (`login`),
   UNIQUE KEY `users_cookie_string` (`cookie_string`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='User information';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3 COMMENT='User information';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2142,139 +2176,6 @@ UNLOCK TABLES;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `latest_req_version_id`
---
-
-/*!50001 DROP TABLE IF EXISTS `latest_req_version_id`*/;
-/*!50001 DROP VIEW IF EXISTS `latest_req_version_id`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = latin1 */;
-/*!50001 SET character_set_results     = latin1 */;
-/*!50001 SET collation_connection      = latin1_swedish_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `latest_req_version_id` AS select `lrqvn`.`req_id` AS `req_id`,`lrqvn`.`version` AS `version`,`REQV`.`id` AS `req_version_id` from ((`latest_req_version` `LRQVN` join `nodes_hierarchy` `NHRQV` on(`NHRQV`.`parent_id` = `lrqvn`.`req_id`)) join `req_versions` `REQV` on(`REQV`.`id` = `NHRQV`.`id` and `REQV`.`version` = `lrqvn`.`version`)) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `latest_rspec_revision`
---
-
-/*!50001 DROP TABLE IF EXISTS `latest_rspec_revision`*/;
-/*!50001 DROP VIEW IF EXISTS `latest_rspec_revision`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = latin1 */;
-/*!50001 SET character_set_results     = latin1 */;
-/*!50001 SET collation_connection      = latin1_swedish_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `latest_rspec_revision` AS select `RSR`.`parent_id` AS `req_spec_id`,`RS`.`testproject_id` AS `testproject_id`,max(`RSR`.`revision`) AS `revision` from (`req_specs_revisions` `RSR` join `req_specs` `RS` on(`RS`.`id` = `RSR`.`parent_id`)) group by `RSR`.`parent_id`,`RS`.`testproject_id` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `latest_tcase_version_id`
---
-
-/*!50001 DROP TABLE IF EXISTS `latest_tcase_version_id`*/;
-/*!50001 DROP VIEW IF EXISTS `latest_tcase_version_id`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = latin1 */;
-/*!50001 SET character_set_results     = latin1 */;
-/*!50001 SET collation_connection      = latin1_swedish_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `latest_tcase_version_id` AS select `ltcvn`.`testcase_id` AS `testcase_id`,`ltcvn`.`version` AS `version`,`TCV`.`id` AS `tcversion_id` from ((`latest_tcase_version_number` `LTCVN` join `nodes_hierarchy` `NHTCV` on(`NHTCV`.`parent_id` = `ltcvn`.`testcase_id`)) join `tcversions` `TCV` on(`TCV`.`id` = `NHTCV`.`id` and `TCV`.`version` = `ltcvn`.`version`)) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `latest_tcase_version_number`
---
-
-/*!50001 DROP TABLE IF EXISTS `latest_tcase_version_number`*/;
-/*!50001 DROP VIEW IF EXISTS `latest_tcase_version_number`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = latin1 */;
-/*!50001 SET character_set_results     = latin1 */;
-/*!50001 SET collation_connection      = latin1_swedish_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `latest_tcase_version_number` AS select `NH_TC`.`id` AS `testcase_id`,max(`TCV`.`version`) AS `version` from ((`nodes_hierarchy` `NH_TC` join `nodes_hierarchy` `NH_TCV` on(`NH_TCV`.`parent_id` = `NH_TC`.`id`)) join `tcversions` `TCV` on(`NH_TCV`.`id` = `TCV`.`id`)) group by `NH_TC`.`id` */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `tcversions_without_keywords`
---
-
-/*!50001 DROP TABLE IF EXISTS `tcversions_without_keywords`*/;
-/*!50001 DROP VIEW IF EXISTS `tcversions_without_keywords`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = latin1 */;
-/*!50001 SET character_set_results     = latin1 */;
-/*!50001 SET collation_connection      = latin1_swedish_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `tcversions_without_keywords` AS select `NHTCV`.`parent_id` AS `testcase_id`,`NHTCV`.`id` AS `id` from `nodes_hierarchy` `NHTCV` where `NHTCV`.`node_type_id` = 4 and !exists(select 1 from `testcase_keywords` `TCK` where `TCK`.`tcversion_id` = `NHTCV`.`id` limit 1) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `tcversions_without_platforms`
---
-
-/*!50001 DROP TABLE IF EXISTS `tcversions_without_platforms`*/;
-/*!50001 DROP VIEW IF EXISTS `tcversions_without_platforms`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = latin1 */;
-/*!50001 SET character_set_results     = latin1 */;
-/*!50001 SET collation_connection      = latin1_swedish_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `tcversions_without_platforms` AS select `NHTCV`.`parent_id` AS `testcase_id`,`NHTCV`.`id` AS `id` from `nodes_hierarchy` `NHTCV` where `NHTCV`.`node_type_id` = 4 and !exists(select 1 from `testcase_platforms` `TCPL` where `TCPL`.`tcversion_id` = `NHTCV`.`id` limit 1) */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `tsuites_tree_depth_2`
---
-
-/*!50001 DROP TABLE IF EXISTS `tsuites_tree_depth_2`*/;
-/*!50001 DROP VIEW IF EXISTS `tsuites_tree_depth_2`*/;
-/*!50001 SET @saved_cs_client          = @@character_set_client */;
-/*!50001 SET @saved_cs_results         = @@character_set_results */;
-/*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = latin1 */;
-/*!50001 SET character_set_results     = latin1 */;
-/*!50001 SET collation_connection      = latin1_swedish_ci */;
-/*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `tsuites_tree_depth_2` AS select `TPRJ`.`prefix` AS `prefix`,`NHTPRJ`.`name` AS `testproject_name`,`NHTS_L1`.`name` AS `level1_name`,`NHTS_L2`.`name` AS `level2_name`,`NHTPRJ`.`id` AS `testproject_id`,`NHTS_L1`.`id` AS `level1_id`,`NHTS_L2`.`id` AS `level2_id` from (((`testprojects` `TPRJ` join `nodes_hierarchy` `NHTPRJ` on(`TPRJ`.`id` = `NHTPRJ`.`id`)) left join `nodes_hierarchy` `NHTS_L1` on(`NHTS_L1`.`parent_id` = `NHTPRJ`.`id`)) left join `nodes_hierarchy` `NHTS_L2` on(`NHTS_L2`.`parent_id` = `NHTS_L1`.`id`)) where `NHTPRJ`.`node_type_id` = 1 and `NHTS_L1`.`node_type_id` = 2 and `NHTS_L2`.`node_type_id` = 2 */;
-/*!50001 SET character_set_client      = @saved_cs_client */;
-/*!50001 SET character_set_results     = @saved_cs_results */;
-/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2285,4 +2186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03  4:08:29
+-- Dump completed on 2021-08-10  3:30:34

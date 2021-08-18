@@ -1,0 +1,31 @@
+[
+  {
+    "id": "1",
+    "notes": "",
+    "color": "",
+    "active": "1",
+    "option_reqs": "0",
+    "option_priority": "0",
+    "option_automation": "0",
+    "options": "O:8:\"stdClass\":4:{s:19:\"requirementsEnabled\";i:0;s:19:\"testPriorityEnabled\";i:1;s:17:\"automationEnabled\";i:1;s:16:\"inventoryEnabled\";i:0;}",
+    "prefix": "tpe-",
+    "tc_counter": "1",
+    "is_public": "1",
+    "issue_tracker_enabled": "0",
+    "code_tracker_enabled": "0",
+    "reqmgr_integration_enabled": "0",
+    "api_key": "e7a94ca97c1d6aaf7b0fc3e5eeccb3e1d5ecd66d69c41cbd264bd60f93c63ff8",
+    "name": "test-project-example",
+    "effective_role": "8",
+    "itname": null,
+    "ittype": null,
+    "rmsname": null,
+    "rmstype": null,
+    "opt": {
+      "requirementsEnabled": 0,
+      "testPriorityEnabled": 1,
+      "automationEnabled": 1,
+      "inventoryEnabled": 0
+    }
+  }
+]

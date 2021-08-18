@@ -1,0 +1,5 @@
+{
+  "message": "authentication error",
+  "status": 400,
+  "statusText": "Bad Request"
+}
