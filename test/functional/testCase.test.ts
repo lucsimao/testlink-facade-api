@@ -8,7 +8,7 @@ describe('Test Project Test Suite', () => {
     it('should return testCase when call /testCase route', async () => {
       const request = {
         ...TestHelper.getFunctionalTestHeader().headers,
-        [Params.TEST_PROJECT_ID]: 1,
+        [Params.TEST_SUITE_ID]: 3,
       };
 
       const { body, status } = await global.testRequest
@@ -27,7 +27,7 @@ describe('Test Project Test Suite', () => {
 
     const request = {
       ...TestHelper.getFunctionalTestHeader().headers,
-      [Params.TEST_PROJECT_ID]: 1,
+      [Params.TEST_SUITE_ID]: 3,
     };
 
     const { body, status } = await global.testRequest
