@@ -11,6 +11,7 @@ export interface ITestlinkClientParams {
   readonly testlinkApiKey: string | string[] | undefined;
   readonly testlinkPort: string | string[] | undefined;
   readonly testlinkUrl: string | string[] | undefined;
+  readonly rpcPath?: string | string[] | undefined;
 }
 
 export type EndPointFunction = (
@@ -23,11 +24,22 @@ export abstract class BaseController {
   public static parseControllerHeaders(
     request: Partial<Request>
   ): ITestlinkClientParams {
-    return {
-      testlinkApiKey: request.headers?.['testlink-api-key'],
-      testlinkPort: request.headers?.['testlink-port'],
-      testlinkUrl: request.headers?.['testlink-url'],
-    };
+    const headers = request.headers;
+    if (headers) {
+      const rpcPath = headers['rpc-path']
+        ? { rpcPath: headers['rpc-path'] }
+        : {};
+
+      const controllerHeaders = {
+        testlinkApiKey: headers['testlink-api-key'],
+        testlinkPort: headers['testlink-port'],
+        testlinkUrl: headers['testlink-url'],
+        ...rpcPath,
+      };
+
+      return controllerHeaders;
+    }
+    throw new Error();
   }
 
   protected async handleController(
