@@ -16,7 +16,7 @@ export class TestProjectController extends BaseController {
       const headers = BaseController.parseControllerHeaders(request);
 
       const clientResponse = await testlinkClient.getTestProjects({ headers });
-      response.status(200).send(clientResponse);
+      this.sendSuccessResponse(response, 200, clientResponse);
     });
   }
 }

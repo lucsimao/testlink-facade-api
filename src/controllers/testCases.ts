@@ -15,16 +15,13 @@ export class TestCaseController extends BaseController {
     this.handleController(response, async () => {
       const testlinkClient = new TestlinkClient();
       const headers = BaseController.parseControllerHeaders(request);
-      const testProjectId = this.getRequestParam(
-        request,
-        Params.TEST_PROJECT_ID
-      );
+      const testSuiteId = this.getRequestParam(request, Params.TEST_SUITE_ID);
 
       const clientResponse = await testlinkClient.getTestCases(
         { headers },
-        Number(testProjectId)
+        Number(testSuiteId)
       );
-      response.status(200).send(clientResponse);
+      this.sendSuccessResponse(response, 200, clientResponse);
     });
   }
 }

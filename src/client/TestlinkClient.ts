@@ -1,12 +1,3 @@
-import {
-  IUnnormalizedTestCase,
-  TestCaseAdapter,
-} from './util/adapters/testCaseAdapter';
-import {
-  IUnnormalizedTestProject,
-  TestProjectAdapter,
-} from './util/adapters/testProjectAdapter';
-
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import { AxiosRequestConfig } from 'axios';
 import { BuildAdapter } from '@src/client/util/adapters/buildAdapter';
@@ -15,31 +6,29 @@ import { ITestCase } from '@src/models/ITestCase';
 import { ITestPlan } from '@src/models/ITestPlan';
 import { ITestProject } from '@src/models/ITestProject';
 import { ITestSuite } from '@src/models/ITestSuite';
+import { TestCaseAdapter } from './util/adapters/testCaseAdapter';
 import { TestPlanAdapter } from './util/adapters/testPlanAdapter';
+import { TestProjectAdapter } from './util/adapters/testProjectAdapter';
 import { TestSuiteAdapter } from '@src/client/util/adapters/testSuiteAdapter';
 
 export class TestlinkClient {
   public async getMe(requestConfig: AxiosRequestConfig): Promise<unknown> {
-    const route = '/whoAmI';
-    return await AxiosClientHelper.getClientResponse<string>(
-      requestConfig,
-      route
+    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+      requestConfig
     );
+    return await testlink.checkDevKey({
+      devKey: requestConfig.headers?.testlinkApiKey,
+    });
   }
 
   public async getTestProjects(
-    requestConfig: AxiosRequestConfig,
-    testProjectId?: number
+    requestConfig: AxiosRequestConfig
   ): Promise<ITestProject[]> {
-    const route = testProjectId
-      ? `/testprojects/${testProjectId}`
-      : '/testprojects';
+    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+      requestConfig
+    );
 
-    const testProjects =
-      await AxiosClientHelper.getClientResponse<IUnnormalizedTestProject>(
-        requestConfig,
-        route
-      );
+    const testProjects = await testlink.getProjects();
 
     return new TestProjectAdapter().normalize(testProjects);
   }
@@ -48,10 +37,8 @@ export class TestlinkClient {
     requestConfig: AxiosRequestConfig,
     testProjectId: number
   ): Promise<ITestPlan[]> {
-    const testlink = AxiosClientHelper.getTestlinkRPCConfig(
-      requestConfig.headers.testlinkUrl,
-      requestConfig.headers.testlinkPort,
-      requestConfig.headers.testlinkApiKey
+    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+      requestConfig
     );
 
     const testPlans = await testlink.getProjectTestPlans({
@@ -63,13 +50,16 @@ export class TestlinkClient {
 
   public async getTestCases(
     requestConfig: AxiosRequestConfig,
-    testProjectId: number
+    testSuiteId: number
   ): Promise<ITestCase[]> {
-    const testCases =
-      await AxiosClientHelper.getClientResponse<IUnnormalizedTestCase>(
-        requestConfig,
-        `/testprojects/${testProjectId}/testcases`
-      );
+    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+      requestConfig
+    );
+
+    const testCases = await testlink.getTestCasesForTestSuite({
+      testsuiteid: testSuiteId,
+    });
+
     return new TestCaseAdapter().normalize(testCases);
   }
 
@@ -77,10 +67,8 @@ export class TestlinkClient {
     requestConfig: AxiosRequestConfig,
     testPlanId: number
   ): Promise<IBuild[]> {
-    const testlink = AxiosClientHelper.getTestlinkRPCConfig(
-      requestConfig.headers.testlinkUrl,
-      requestConfig.headers.testlinkPort,
-      requestConfig.headers.testlinkApiKey
+    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+      requestConfig
     );
 
     const builds = await testlink.getBuildsForTestPlan({
@@ -94,10 +82,8 @@ export class TestlinkClient {
     requestConfig: AxiosRequestConfig,
     testPlanId: number
   ): Promise<ITestSuite[]> {
-    const testlink = AxiosClientHelper.getTestlinkRPCConfig(
-      requestConfig.headers.testlinkUrl,
-      requestConfig.headers.testlinkPort,
-      requestConfig.headers.testlinkApiKey
+    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+      requestConfig
     );
 
     const testSuites = await testlink.getTestSuitesForTestPlan({

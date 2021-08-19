@@ -12,9 +12,13 @@ import { TestPlanController } from '@src/controllers/testPlans';
 import { TestProjectController } from '@src/controllers/testProjects';
 import { TestSuiteController } from '@src/controllers/testSuites';
 import apiSchema from '@src/api.schema.json';
+import http from 'http';
+import logger from './logger';
 import swaggerUi from 'swagger-ui-express';
 
 export class SetupServer extends Server {
+  private server?: http.Server;
+
   constructor(private port = 3000) {
     super();
   }
@@ -45,7 +49,19 @@ export class SetupServer extends Server {
   }
 
   public start(): void {
-    this.app.listen(this.port);
+    this.server = this.app.listen(this.port, () => {
+      logger.info('Server listening on port: ' + this.port);
+    });
+  }
+
+  public async close(): Promise<void> {
+    if (this.server) {
+      await new Promise((resolve, reject) => {
+        this.server?.close((err) => {
+          return err ? reject(err) : resolve(true);
+        });
+      });
+    }
   }
 
   private async docsSetup(): Promise<void> {

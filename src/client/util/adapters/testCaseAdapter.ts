@@ -3,10 +3,10 @@ import { ITestCase } from '@src/models/ITestCase';
 
 export interface IUnnormalizedTestCase {
   readonly id: string;
-  readonly author_id: string;
+  readonly external_id: string;
   readonly name: string;
-  readonly preconditions: string | '';
-  readonly summary: string | '';
+  readonly preconditions?: string;
+  readonly summary?: string;
 }
 
 export class TestCaseAdapter extends AbstractAdapter<
@@ -16,22 +16,16 @@ export class TestCaseAdapter extends AbstractAdapter<
   protected normalizeFunction(testCase: IUnnormalizedTestCase): ITestCase {
     return {
       id: Number(testCase.id),
-      authorId: Number(testCase.author_id),
+      externalId: testCase.external_id,
       name: testCase.name,
-      summary: testCase.summary,
-      preconditions: testCase.preconditions,
+      summary: testCase.summary || '',
+      preconditions: testCase.preconditions || '',
     };
   }
 
   protected isValidTestElement(
     testCase: Partial<IUnnormalizedTestCase>
   ): boolean {
-    return !!(
-      testCase.id &&
-      testCase.name &&
-      testCase.preconditions &&
-      testCase.summary &&
-      testCase.author_id
-    );
+    return !!(testCase.id && testCase.name && testCase.external_id);
   }
 }

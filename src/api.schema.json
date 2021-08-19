@@ -65,6 +65,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error"
+                }
+              }
+            }
           }
         }
       }
@@ -99,9 +109,9 @@
             "required": true
           },
           {
-            "name": "test-project-id",
+            "name": "test-suite-id",
             "schema": {
-              "$ref": "#/components/schemas/test-project-id"
+              "$ref": "#/components/schemas/test-suite-id"
             },
             "in": "header",
             "required": true
@@ -303,6 +313,19 @@
       "test-project-id": {
         "type": "number",
         "example": 1
+      },
+      "test-suite-id": {
+        "type": "number",
+        "example": 3
+      },
+      "error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "The Test Plan ID (1) provided does not exist!"
+          }
+        }
       },
       "Builds": {
         "type": "array",

@@ -1,4 +1,4 @@
-import { APIError } from '../../api-error';
+import { APIError, IError } from '../../api-error';
 
 describe('APIError', () => {
   it('should format error with mandatory fields', () => {
@@ -36,5 +36,23 @@ describe('APIError', () => {
       description: 'This error happens when there is no user created',
       documentation: 'https://mydocs.com/error-404',
     });
+  });
+
+  it('should format message when receive a error with just a message', () => {
+    const error = APIError.format({
+      code: 5000,
+      message: 'User not found!',
+      description: undefined,
+      documentation: undefined,
+    });
+    expect(error).toEqual({
+      error: 'User not found!',
+    });
+  });
+
+  it('should format message when receive a error with just a message', () => {
+    const errorToFormat = {} as IError;
+    const error = APIError.format(errorToFormat);
+    expect(error).toEqual({ error: '[object Object]' });
   });
 });

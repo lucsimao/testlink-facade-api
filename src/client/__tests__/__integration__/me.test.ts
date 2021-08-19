@@ -17,9 +17,9 @@ describe('Who Test', () => {
     try {
       await testlinkClient.getMe(requestConfig);
     } catch (error) {
-      expect(error.response?.status).toBe(400);
-      expect(error.response?.statusText).toBe('Bad Request');
-      expect(error.response?.data?.message).toBe('authentication error');
+      expect(error.toString()).toEqual(
+        'Error: [2000] (checkDevKey) - Can not authenticate client: invalid developer key'
+      );
     }
   });
 });

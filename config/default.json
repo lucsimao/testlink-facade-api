@@ -5,6 +5,10 @@
       "url": "localhost",
       "port": 80,
       "apikey": "6e204ef53aecd003c19f2a89178ba60b"
+    },
+    "logger": {
+      "enabled": true,
+      "level": "info"
     }
   }
 }

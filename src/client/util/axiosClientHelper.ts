@@ -1,19 +1,32 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { TestLink } from 'testlink-xmlrpc';
+import logger from '@src/logger';
 
 export class AxiosClientHelper {
-  public static getTestlinkRPCConfig(
-    host: string,
-    port: number,
-    apiKey: string
-  ): TestLink {
-    return new TestLink({
-      host: host,
-      port: port,
+  /**
+   * Returns a instance of Testlink xmlrpc
+   *
+   * @param requestConfig - AxiosRequestConfig with following params
+   * @param requestConfig.headers.testlinkUrl  - Testlink server ip
+   * @param requestConfig.headers.testlinkPort - Testlink server port
+   * @param requestConfig.headers.testlinkApiKey - Testlink server user api key
+   * @param [requestConfig.headers.rpcPath] - (Optional) custom Testlink rpcPath, example: 'testlink/lib/api/xmlrpc/v1/xmlrpc.php',
+   */
+  public static async getTestlinkRPCConfig(
+    requestConfig: AxiosRequestConfig
+  ): Promise<TestLink> {
+    const testlink = new TestLink({
+      host: requestConfig.headers?.testlinkUrl,
+      port: requestConfig.headers?.testlinkPort,
       secure: true,
-      apiKey: apiKey,
+      apiKey: requestConfig.headers?.testlinkApiKey,
+      rpcPath: requestConfig.headers?.rpcPath,
     });
+    logger.info(
+      `Connected to Testlink XMLRPC: ${await testlink.testLinkVersion()}`
+    );
+    return testlink;
   }
 
   public static async getClientResponse<T>(
@@ -44,15 +57,20 @@ export class AxiosClientHelper {
   }
 
   private static setTestlinkApiKey(requestConfig: AxiosRequestConfig): void {
-    requestConfig.headers.APIKEY = requestConfig.headers.testlinkApiKey;
+    const headers = requestConfig.headers;
+    if (headers) {
+      requestConfig.headers.APIKEY = requestConfig.headers?.testlinkApiKey;
+    }
   }
 
   private static setTestlinkUrl(requestConfig: AxiosRequestConfig): void {
     const headers = requestConfig.headers;
-    headers.testlinkUrl = this.parseRestURL(
-      headers.testlinkUrl,
-      headers.testlinkPort
-    );
+    if (headers) {
+      headers.testlinkUrl = this.parseRestURL(
+        headers.testlinkUrl,
+        headers.testlinkPort
+      );
+    }
   }
 
   private static parseRestURL(ip: string, port: number): string {

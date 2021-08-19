@@ -23,7 +23,7 @@ export class TestPlanController extends BaseController {
         { headers },
         Number(testProjectId)
       );
-      response.status(200).send(clientResponse);
+      this.sendSuccessResponse(response, 200, clientResponse);
     });
   }
 }
