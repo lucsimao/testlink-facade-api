@@ -1,9 +1,9 @@
 [
   {
-    "id": 5,
-    "authorId": 1,
+    "id": 4,
+    "externalId": "tpe--1",
     "name": "test-case-example",
-    "preconditions": "<p>preconditions-example</p>\r\n",
-    "summary": "<p>summary-example</p>\r\n"
+    "preconditions": "",
+    "summary": ""
   }
 ]

@@ -6,7 +6,7 @@ describe('TestCase Test', () => {
   it('should return the normalized testCase from Testlink Service', async () => {
     const testlinkClient = new TestlinkClient();
     const requestConfig = TestHelper.getIntegrationTestHeader();
-    const response = await testlinkClient.getTestCases(requestConfig, 1);
+    const response = await testlinkClient.getTestCases(requestConfig, 3);
     expect(response).toEqual(testCaseFixture);
   });
 });

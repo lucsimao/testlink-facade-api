@@ -29,7 +29,8 @@ describe('Auth Tests', () => {
     expect(fakeResponse.status).toHaveBeenCalledWith(401);
     expect(sendMock).toHaveBeenCalledWith({
       code: 401,
-      error: 'Request failed with status code 400',
+      error:
+        '[2000] (checkDevKey) - Can not authenticate client: invalid developer key',
     });
   });
 });
