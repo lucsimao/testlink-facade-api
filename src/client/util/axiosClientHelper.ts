@@ -57,15 +57,20 @@ export class AxiosClientHelper {
   }
 
   private static setTestlinkApiKey(requestConfig: AxiosRequestConfig): void {
-    requestConfig.headers.APIKEY = requestConfig.headers.testlinkApiKey;
+    const headers = requestConfig.headers;
+    if (headers) {
+      requestConfig.headers.APIKEY = requestConfig.headers?.testlinkApiKey;
+    }
   }
 
   private static setTestlinkUrl(requestConfig: AxiosRequestConfig): void {
     const headers = requestConfig.headers;
-    headers.testlinkUrl = this.parseRestURL(
-      headers.testlinkUrl,
-      headers.testlinkPort
-    );
+    if (headers) {
+      headers.testlinkUrl = this.parseRestURL(
+        headers.testlinkUrl,
+        headers.testlinkPort
+      );
+    }
   }
 
   private static parseRestURL(ip: string, port: number): string {
