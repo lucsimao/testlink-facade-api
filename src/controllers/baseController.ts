@@ -5,6 +5,7 @@ import { AxiosResponse } from 'axios';
 import { ClassMiddleware } from '@overnightjs/core';
 import { TestlinkClient } from '@src/client/TestlinkClient';
 import { authMiddleware } from '@src/middlewares/authMiddleware';
+import logger from '@src/logger';
 
 export interface ITestlinkClientParams {
   readonly testlinkApiKey: string | string[] | undefined;
@@ -48,7 +49,17 @@ export abstract class BaseController {
     return headers[param];
   }
 
+  protected sendSuccessResponse(
+    response: Response,
+    status = 200,
+    body: unknown
+  ): void {
+    logger.info(`RESPONSE - status: ${status} - body: ${JSON.stringify(body)}`);
+    response.status(status).send(body);
+  }
+
   protected sendErrorResponse(response: Response, apiError: IError): Response {
+    logger.error(apiError);
     return response
       .status(apiError.code || 500)
       .send(APIError.format(apiError));

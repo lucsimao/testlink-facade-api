@@ -18,7 +18,7 @@ export class BuildController extends BaseController {
         { headers },
         Number(testPlanId)
       );
-      response.status(200).send(clientResponse);
+      this.sendSuccessResponse(response, 200, clientResponse);
     });
   }
 }
