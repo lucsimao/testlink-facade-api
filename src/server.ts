@@ -54,6 +54,16 @@ export class SetupServer extends Server {
     });
   }
 
+  public async close(): Promise<void> {
+    if (this.server) {
+      await new Promise((resolve, reject) => {
+        this.server?.close((err) => {
+          return err ? reject(err) : resolve(true);
+        });
+      });
+    }
+  }
+
   private async docsSetup(): Promise<void> {
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
     this.app.use(
