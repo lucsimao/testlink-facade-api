@@ -7,6 +7,7 @@ export interface IUnnormalizedTestCase {
   readonly name: string;
   readonly preconditions?: string;
   readonly summary?: string;
+  readonly creation_ts?: string;
 }
 
 export class TestCaseAdapter extends AbstractAdapter<
@@ -20,6 +21,7 @@ export class TestCaseAdapter extends AbstractAdapter<
       name: testCase.name,
       summary: testCase.summary || '',
       preconditions: testCase.preconditions || '',
+      creationDate: testCase.creation_ts,
     };
   }
 

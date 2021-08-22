@@ -1,6 +1,7 @@
 import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import { AxiosRequestConfig } from 'axios';
 import { BuildAdapter } from '@src/client/util/adapters/buildAdapter';
+import { Details } from 'testlink-xmlrpc/build/constants';
 import { IBuild } from '@src/models/IBuild';
 import { ITestCase } from '@src/models/ITestCase';
 import { ITestPlan } from '@src/models/ITestPlan';
@@ -58,6 +59,7 @@ export class TestlinkClient {
 
     const testCases = await testlink.getTestCasesForTestSuite({
       testsuiteid: testSuiteId,
+      details: Details.FULL,
     });
 
     return new TestCaseAdapter().normalize(testCases);
