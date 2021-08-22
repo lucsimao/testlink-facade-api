@@ -3,7 +3,8 @@
     "id": 4,
     "externalId": "tpe--1",
     "name": "test-case-example",
-    "preconditions": "",
-    "summary": ""
+    "preconditions": "<p>preconditions-example</p>\r\n",
+    "summary": "<p>summary-example</p>\r\n",
+    "creationDate": "2021-08-03 04:08:03"
   }
 ]

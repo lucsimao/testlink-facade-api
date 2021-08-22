@@ -4,4 +4,5 @@ export interface ITestCase {
   readonly name: string;
   readonly preconditions: string | '';
   readonly summary: string | '';
+  readonly creationDate?: string;
 }

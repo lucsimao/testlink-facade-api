@@ -1,11 +1,59 @@
 [
   {
     "id": "4",
-    "parent_id": "3",
-    "node_type_id": "3",
-    "node_order": "1000",
-    "node_table": "testcases",
+    "active": "1",
+    "author_first_name": "user",
+    "author_id": "1",
+    "author_last_name": "Administrator",
+    "author_login": "user",
+    "creation_ts": "2021-08-03 04:08:03",
+    "estimated_exec_duration": "",
+    "execution_type": "1",
+    "external_id": "tpe--1",
+    "importance": "2",
+    "is_open": "1",
+    "layout": "1",
+    "modification_ts": "2021-08-20 17:05:06",
     "name": "test-case-example",
-    "external_id": "tpe--1"
+    "preconditions": "",
+    "summary": "",
+    "node_order": "1000",
+    "preconditions": "<p>preconditions-example</p>\r\n",
+    "status": "1",
+    "steps": [
+      {
+        "actions": "<p><strong>Preencher campo nome com &quot;lucas&quot;</strong></p>\r\n",
+        "active": "1",
+        "execution_type": "1",
+        "expected_results": "<p>O campo deve aparecer preenchido</p>\r\n",
+        "id": "7",
+        "step_number": "1"
+      },
+      {
+        "actions": "<p>preencher campo senha com &quot;123455&quot;</p>\r\n",
+        "active": "1",
+        "execution_type": "1",
+        "expected_results": "",
+        "id": "8",
+        "step_number": "2"
+      },
+      {
+        "actions": "<p>Clicar no bot&atilde;o &quot;Logar&quot;</p>\r\n",
+        "active": "1",
+        "execution_type": "1",
+        "expected_results": "<p>O sistema deve redirecionar para o feed do facebook</p>\r\n",
+        "id": "9",
+        "step_number": "3"
+      }
+    ],
+    "summary": "<p>summary-example</p>\r\n",
+    "tc_external_id": "1",
+    "testcase_id": "4",
+    "testsuite_id": "3",
+    "updater_first_name": "user",
+    "updater_id": "1",
+    "updater_last_name": "Administrator",
+    "updater_login": "user",
+    "version": "1"
   }
 ]
