@@ -1,6 +1,6 @@
-import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import { AxiosRequestConfig } from 'axios';
 import { BuildAdapter } from '@src/client/util/adapters/buildAdapter';
+import { ClientXMLRPCHelper } from '@src/client/util/clientXMLRPCHelper';
 import { Details } from 'testlink-xmlrpc/build/constants';
 import { IBuild } from '@src/models/IBuild';
 import { ITestCase } from '@src/models/ITestCase';
@@ -14,7 +14,7 @@ import { TestSuiteAdapter } from '@src/client/util/adapters/testSuiteAdapter';
 
 export class TestlinkClient {
   public async getMe(requestConfig: AxiosRequestConfig): Promise<unknown> {
-    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+    const testlink = await ClientXMLRPCHelper.getTestlinkRPCConfig(
       requestConfig
     );
     return await testlink.checkDevKey({
@@ -25,7 +25,7 @@ export class TestlinkClient {
   public async getTestProjects(
     requestConfig: AxiosRequestConfig
   ): Promise<ITestProject[]> {
-    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+    const testlink = await ClientXMLRPCHelper.getTestlinkRPCConfig(
       requestConfig
     );
 
@@ -38,7 +38,7 @@ export class TestlinkClient {
     requestConfig: AxiosRequestConfig,
     testProjectId: number
   ): Promise<ITestPlan[]> {
-    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+    const testlink = await ClientXMLRPCHelper.getTestlinkRPCConfig(
       requestConfig
     );
 
@@ -53,7 +53,7 @@ export class TestlinkClient {
     requestConfig: AxiosRequestConfig,
     testSuiteId: number
   ): Promise<ITestCase[]> {
-    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+    const testlink = await ClientXMLRPCHelper.getTestlinkRPCConfig(
       requestConfig
     );
 
@@ -69,7 +69,7 @@ export class TestlinkClient {
     requestConfig: AxiosRequestConfig,
     testPlanId: number
   ): Promise<IBuild[]> {
-    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+    const testlink = await ClientXMLRPCHelper.getTestlinkRPCConfig(
       requestConfig
     );
 
@@ -84,7 +84,7 @@ export class TestlinkClient {
     requestConfig: AxiosRequestConfig,
     testPlanId: number
   ): Promise<ITestSuite[]> {
-    const testlink = await AxiosClientHelper.getTestlinkRPCConfig(
+    const testlink = await ClientXMLRPCHelper.getTestlinkRPCConfig(
       requestConfig
     );
 
