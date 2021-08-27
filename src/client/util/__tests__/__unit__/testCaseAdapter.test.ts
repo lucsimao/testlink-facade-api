@@ -3,7 +3,6 @@ import {
   TestCaseAdapter,
 } from '@src/client/util/adapters/testCaseAdapter';
 
-import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import normalizedTestCaseFixture from '@test/fixtures/normalized/testCase.json';
 import testCaseFixture from '@test/fixtures/unnormalized/testCase.json';
 
@@ -17,14 +16,11 @@ describe('Test Project Adapter Test', () => {
   });
 
   it('should return a empty array when receive neither valid ITestCase', async () => {
-    AxiosClientHelper.getClientResponse = jest
-      .fn()
-      .mockResolvedValue([{ id: 'non_validProject' }]);
+    const testCases = [{ id: 'non_validProject' }];
 
-    const testCase =
-      await AxiosClientHelper.getClientResponse<IUnnormalizedTestCase>({}, '');
-
-    const normalizedTestCase = new TestCaseAdapter().normalize(testCase);
+    const normalizedTestCase = new TestCaseAdapter().normalize(
+      testCases as unknown as IUnnormalizedTestCase[]
+    );
 
     expect(normalizedTestCase).toEqual([]);
   });

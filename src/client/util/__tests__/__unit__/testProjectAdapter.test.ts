@@ -3,7 +3,6 @@ import {
   TestProjectAdapter,
 } from '@src/client/util/adapters/testProjectAdapter';
 
-import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import normalizedTestProjectFixture from '@test/fixtures/normalized/testProject.json';
 import testProjectFixture from '@test/fixtures/unnormalized/testProject.json';
 
@@ -19,18 +18,10 @@ describe('Test Project Adapter Test', () => {
   });
 
   it('should return a empty array when receive neither valid ITestProject', async () => {
-    AxiosClientHelper.getClientResponse = jest
-      .fn()
-      .mockResolvedValue([{ id: 'non_validProject' }]);
-
-    const testProject =
-      await AxiosClientHelper.getClientResponse<IUnnormalizedTestProject>(
-        {},
-        ''
-      );
+    const testProjects = [{ id: 'non_validProject' }];
 
     const normalizedTestProject = new TestProjectAdapter().normalize(
-      testProject
+      testProjects as unknown as IUnnormalizedTestProject[]
     );
 
     expect(normalizedTestProject).toEqual([]);
