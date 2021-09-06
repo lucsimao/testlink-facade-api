@@ -2,29 +2,32 @@ import { APIError, IError } from '../../api-error';
 
 describe('APIError', () => {
   it('should format error with mandatory fields', () => {
-    const error = APIError.format({ code: 404, message: 'User not found!' });
+    const error = APIError.format({
+      statusCode: 404,
+      message: 'User not found!',
+    });
     expect(error).toEqual({
       message: 'User not found!',
       error: 'Not Found',
-      code: 404,
+      statusCode: 404,
     });
   });
   it('should format error with mandatory fields and description', () => {
     const error = APIError.format({
-      code: 404,
+      statusCode: 404,
       message: 'User not found!',
       description: 'This error happens when there is no user created',
     });
     expect(error).toEqual({
       message: 'User not found!',
       error: 'Not Found',
-      code: 404,
+      statusCode: 404,
       description: 'This error happens when there is no user created',
     });
   });
   it('should format error with mandatory fields and description and documentation', () => {
     const error = APIError.format({
-      code: 404,
+      statusCode: 404,
       message: 'User not found!',
       description: 'This error happens when there is no user created',
       documentation: 'https://mydocs.com/error-404',
@@ -32,7 +35,7 @@ describe('APIError', () => {
     expect(error).toEqual({
       message: 'User not found!',
       error: 'Not Found',
-      code: 404,
+      statusCode: 404,
       description: 'This error happens when there is no user created',
       documentation: 'https://mydocs.com/error-404',
     });
@@ -40,7 +43,7 @@ describe('APIError', () => {
 
   it('should format message when receive a error with just a message', () => {
     const error = APIError.format({
-      code: 5000,
+      statusCode: 5000,
       message: 'User not found!',
       description: undefined,
       documentation: undefined,
