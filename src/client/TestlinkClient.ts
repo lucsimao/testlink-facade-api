@@ -12,7 +12,7 @@ import { TestLink } from 'testlink-xmlrpc';
 import { TestPlanAdapter } from './util/adapters/testPlanAdapter';
 import { TestProjectAdapter } from './util/adapters/testProjectAdapter';
 import { TestSuiteAdapter } from '@src/client/util/adapters/testSuiteAdapter';
-import { TestlinkClientError } from './error/TestlinkClientError';
+import { TestlinkClientErrorFactory } from './error/TestlinkClientErrorFactory';
 
 export class TestlinkClient {
   public async callRPCMethod<T>(
@@ -25,7 +25,7 @@ export class TestlinkClient {
     try {
       return await callback(testlink);
     } catch (error) {
-      throw new TestlinkClientError(error as Error);
+      throw TestlinkClientErrorFactory.parseError(error as Error);
     }
   }
 

@@ -1,9 +1,10 @@
-import { APIError, IError } from '@src/util/errors/api-error';
 import { Request, Response } from 'express';
 
+import { APIError } from '@src/util/errors/api-error';
 import { AxiosResponse } from 'axios';
 import { ClassMiddleware } from '@overnightjs/core';
 import { TestlinkClient } from '@src/client/TestlinkClient';
+import { TestlinkClientError } from '@src/client/error/TestlinkClientErrorFactory';
 import { authMiddleware } from '@src/middlewares/authMiddleware';
 import logger from '@src/logger';
 
@@ -49,7 +50,7 @@ export abstract class BaseController {
     try {
       await controllerFunction();
     } catch (error) {
-      this.sendErrorResponse(response, error);
+      this.sendErrorResponse(response, error as TestlinkClientError);
     }
   }
 
@@ -70,10 +71,13 @@ export abstract class BaseController {
     response.status(status).send(body);
   }
 
-  protected sendErrorResponse(response: Response, apiError: IError): Response {
+  protected sendErrorResponse(
+    response: Response,
+    apiError: TestlinkClientError
+  ): Response {
     logger.error(apiError);
     return response
-      .status(apiError.code || 500)
+      .status(apiError.statusCode || 500)
       .send(APIError.format(apiError));
   }
 }
