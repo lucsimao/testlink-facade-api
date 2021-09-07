@@ -24,4 +24,25 @@ describe('Test Project Adapter Test', () => {
 
     expect(normalizedTestCase).toEqual([]);
   });
+
+  it('should return the correct INormalizedTestCase when receive a valid ITestCase', async () => {
+    const testCase = {
+      id: 1,
+      external_id: 'fake',
+      name: 'fake',
+      creation_ts: 'fake',
+    } as unknown as IUnnormalizedTestCase;
+    const normalizedTestCase = new TestCaseAdapter().normalize([testCase]);
+
+    expect(normalizedTestCase).toEqual([
+      {
+        creationDate: 'fake',
+        externalId: 'fake',
+        id: 1,
+        name: 'fake',
+        preconditions: '',
+        summary: '',
+      },
+    ]);
+  });
 });

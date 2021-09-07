@@ -2,14 +2,26 @@
 import * as TestLinkModule from 'testlink-xmlrpc';
 
 import { ClientXMLRPCHelper } from '@src/client/util/clientXMLRPCHelper';
+import { TestHelper } from '@test/util/testHelper';
 
 describe('Axios Client Helper Tests', () => {
-  it('should call Testlink constructor one time when getTestLinkRCPConfig is called', () => {
+  it('should call Testlink constructor one time when getTestLinkRCPConfig is called with a empty RequestConfig', () => {
     const constructorSpy = jest
       .spyOn(TestLinkModule, 'TestLink')
       .mockImplementation();
 
     ClientXMLRPCHelper.getTestlinkRPCConfig({});
+
+    expect(constructorSpy).toBeCalledTimes(1);
+  });
+
+  it('should call Testlink constructor one time when getTestLinkRCPConfig is called with a valid RequestConfig', () => {
+    const constructorSpy = jest
+      .spyOn(TestLinkModule, 'TestLink')
+      .mockImplementation();
+
+    const requestConfig = TestHelper.getIntegrationTestHeader();
+    ClientXMLRPCHelper.getTestlinkRPCConfig(requestConfig);
 
     expect(constructorSpy).toBeCalledTimes(1);
   });

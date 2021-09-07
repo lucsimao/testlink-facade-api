@@ -23,4 +23,19 @@ describe('Test Helper tests', () => {
       },
     });
   });
+
+  it('should return integration params when getIntegrationParams is called with headers', () => {
+    const headers = TestHelper.getIntegrationTestHeader({
+      testlinkApiKey: 'fakeTestlinkApiKey',
+      testlinkPort: 'fakeTestlinkApiPort',
+      testlinkUrl: 'fakeTestlinkApiUrl',
+    });
+    expect(headers).toEqual({
+      headers: {
+        testlinkApiKey: 'fakeTestlinkApiKey',
+        testlinkPort: 'fakeTestlinkApiPort',
+        testlinkUrl: 'fakeTestlinkApiUrl',
+      },
+    });
+  });
 });
