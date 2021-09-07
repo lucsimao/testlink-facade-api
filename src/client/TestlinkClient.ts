@@ -32,7 +32,7 @@ export class TestlinkClient {
   public async getMe(requestConfig: AxiosRequestConfig): Promise<unknown> {
     return this.callRPCMethod<unknown>(requestConfig, async (testlink) => {
       return await testlink.checkDevKey({
-        devKey: requestConfig.headers?.testlinkApiKey,
+        devKey: requestConfig.headers.testlinkApiKey,
       });
     });
   }
