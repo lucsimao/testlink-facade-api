@@ -37,7 +37,7 @@ export abstract class BaseController {
 
       return controllerHeaders;
     }
-    throw new Error();
+    throw new Error('Empty Headers to parse');
   }
 
   protected async handleController(
@@ -61,8 +61,8 @@ export abstract class BaseController {
 
   protected sendSuccessResponse(
     response: Response,
-    status = 200,
-    body: unknown
+    body: unknown,
+    status = 200
   ): void {
     logger.info(`RESPONSE - status: ${status} - body: ${JSON.stringify(body)}`);
     response.status(status).send(body);
@@ -71,10 +71,8 @@ export abstract class BaseController {
   protected sendErrorResponse(
     response: Response,
     apiError: TestlinkClientError
-  ): Response {
+  ): void {
     logger.error(apiError);
-    return response
-      .status(apiError.statusCode || 500)
-      .send(APIError.format(apiError));
+    response.status(apiError.statusCode || 500).send(APIError.format(apiError));
   }
 }

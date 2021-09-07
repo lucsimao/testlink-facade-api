@@ -21,7 +21,7 @@ export class TestCaseController extends BaseController {
         { headers },
         Number(testSuiteId)
       );
-      this.sendSuccessResponse(response, 200, clientResponse);
+      this.sendSuccessResponse(response, clientResponse, 200);
     });
   }
 }
