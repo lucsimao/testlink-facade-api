@@ -2,10 +2,8 @@ import { Request, Response } from 'express';
 
 import { APIError } from '@src/util/errors/api-error';
 import { AxiosResponse } from 'axios';
-import { ClassMiddleware } from '@overnightjs/core';
 import { TestlinkClient } from '@src/client/TestlinkClient';
 import { TestlinkClientError } from '@src/client/error/TestlinkClientErrorFactory';
-import { authMiddleware } from '@src/middlewares/authMiddleware';
 import logger from '@src/logger';
 
 export interface ITestlinkClientParams {
@@ -20,7 +18,6 @@ export type EndPointFunction = (
   testlinkClient: TestlinkClient
 ) => Promise<AxiosResponse>;
 
-@ClassMiddleware(authMiddleware)
 export abstract class BaseController {
   public static parseControllerHeaders(
     request: Partial<Request>
