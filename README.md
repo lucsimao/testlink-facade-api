@@ -1,6 +1,6 @@
 # Testlink Facade Api
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT) [![Actions Status](https://github.com/waldemarnt/node-typescript-api/workflows/Complete%20workflow/badge.svg)](https://github.com/lucsimao/testlink-facade-api/actions) [![codecov](https://codecov.io/gh/lucsimao/testlink-facade-api/branch/develop/graph/badge.svg?token=S02C34WGQ3)](https://codecov.io/gh/lucsimao/testlink-facade-api)
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT) [![Actions Status](https://github.com/waldemarnt/node-typescript-api/workflows/Complete%20workflow/badge.svg)](https://github.com/lucsimao/testlink-facade-api/actions) [![codecov](https://codecov.io/gh/lucsimao/testlink-facade-api/branch/master/graph/badge.svg?token=S02C34WGQ3)](https://codecov.io/gh/lucsimao/testlink-facade-api)
 
 Testlink facade API that provides some features to Testlink integration
 
