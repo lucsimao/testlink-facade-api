@@ -2,7 +2,7 @@ import httpStatusCode from 'http-status-codes';
 
 export interface IError {
   message: string;
-  code: number;
+  statusCode: number;
   codeAsString?: string;
   description?: string;
   documentation?: string;
@@ -17,10 +17,10 @@ export class APIError {
     try {
       return {
         message: error.message,
-        code: error.code,
+        statusCode: error.statusCode,
         error: error.codeAsString
           ? error.codeAsString
-          : httpStatusCode.getStatusText(error.code),
+          : httpStatusCode.getStatusText(error.statusCode),
         ...(error.documentation && { documentation: error.documentation }),
         ...(error.description && { description: error.description }),
       };

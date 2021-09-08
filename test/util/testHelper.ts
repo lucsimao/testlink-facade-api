@@ -8,11 +8,16 @@ export interface ITestlinkControllerParams {
 }
 
 export class TestHelper {
-  public static getIntegrationTestHeader(): AxiosRequestConfig {
+  public static getIntegrationTestHeader(header?: {
+    testlinkApiKey?: string;
+    testlinkPort?: string;
+    testlinkUrl?: string;
+  }): AxiosRequestConfig {
     const headers = {
-      testlinkApiKey: config.get('App.testlink.apikey'),
-      testlinkPort: config.get('App.testlink.port'),
-      testlinkUrl: config.get('App.testlink.url'),
+      testlinkApiKey:
+        header?.testlinkApiKey || config.get('App.testlink.apikey'),
+      testlinkPort: header?.testlinkPort || config.get('App.testlink.port'),
+      testlinkUrl: header?.testlinkUrl || config.get('App.testlink.url'),
     };
     return { headers };
   }

@@ -10,5 +10,12 @@ module.exports = {
     rootDir: root,
     displayName: 'unit-tests',
     testMatch: ['<rootDir>/**/__unit__/**/*.test.ts'],
+    collectCoverage: true,
+    collectCoverageFrom: [
+      'src/**/*.ts',
+      '!src/**/*.test.ts',
+      '!src/**/module-alias.ts',
+      '!src/index.ts',
+    ],
   },
 };

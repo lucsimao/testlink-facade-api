@@ -1,10 +1,9 @@
-import { APIError, IError } from '@src/util/errors/api-error';
 import { Request, Response } from 'express';
 
+import { APIError } from '@src/util/errors/api-error';
 import { AxiosResponse } from 'axios';
-import { ClassMiddleware } from '@overnightjs/core';
 import { TestlinkClient } from '@src/client/TestlinkClient';
-import { authMiddleware } from '@src/middlewares/authMiddleware';
+import { TestlinkClientError } from '@src/client/error/TestlinkClientErrorFactory';
 import logger from '@src/logger';
 
 export interface ITestlinkClientParams {
@@ -19,7 +18,6 @@ export type EndPointFunction = (
   testlinkClient: TestlinkClient
 ) => Promise<AxiosResponse>;
 
-@ClassMiddleware(authMiddleware)
 export abstract class BaseController {
   public static parseControllerHeaders(
     request: Partial<Request>
@@ -39,7 +37,7 @@ export abstract class BaseController {
 
       return controllerHeaders;
     }
-    throw new Error();
+    throw new Error('Empty Headers to parse');
   }
 
   protected async handleController(
@@ -49,7 +47,7 @@ export abstract class BaseController {
     try {
       await controllerFunction();
     } catch (error) {
-      this.sendErrorResponse(response, error);
+      this.sendErrorResponse(response, error as TestlinkClientError);
     }
   }
 
@@ -63,17 +61,18 @@ export abstract class BaseController {
 
   protected sendSuccessResponse(
     response: Response,
-    status = 200,
-    body: unknown
+    body: unknown,
+    status = 200
   ): void {
     logger.info(`RESPONSE - status: ${status} - body: ${JSON.stringify(body)}`);
     response.status(status).send(body);
   }
 
-  protected sendErrorResponse(response: Response, apiError: IError): Response {
+  protected sendErrorResponse(
+    response: Response,
+    apiError: TestlinkClientError
+  ): void {
     logger.error(apiError);
-    return response
-      .status(apiError.code || 500)
-      .send(APIError.format(apiError));
+    response.status(apiError.statusCode || 500).send(APIError.format(apiError));
   }
 }
