@@ -11,5 +11,12 @@ module.exports = {
     displayName: 'functional-tests',
     setupFilesAfterEnv: ['<rootDir>/test/jest-setup.ts'],
     testMatch: ['<rootDir>/test/**/*.test.ts'],
+    collectCoverage: true,
+    collectCoverageFrom: [
+      'src/controllers/**/*.ts',
+      '!src/**/*.test.ts',
+      '!src/**/module-alias.ts',
+      '!src/index.ts',
+    ],
   },
 };

@@ -16,9 +16,12 @@ describe('Who Test', () => {
     requestConfig.headers.testlinkApiKey = 'invalid api key';
     try {
       await testlinkClient.getMe(requestConfig);
+      throw new Error('Test Failed');
     } catch (error) {
-      expect(error.toString()).toEqual(
-        'Error: [2000] (checkDevKey) - Can not authenticate client: invalid developer key'
+      expect(error).toEqual(
+        new Error(
+          '[2000] (checkDevKey) - Can not authenticate client: invalid developer key'
+        )
       );
     }
   });

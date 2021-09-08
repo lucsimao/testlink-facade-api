@@ -3,7 +3,6 @@ import {
   TestSuiteAdapter,
 } from '@src/client/util/adapters/testSuiteAdapter';
 
-import { AxiosClientHelper } from '@src/client/util/axiosClientHelper';
 import normalizedTestSuiteFixture from '@test/fixtures/normalized/testSuite.json';
 import testSuiteFixture from '@test/fixtures/unnormalized/testSuite.json';
 
@@ -17,14 +16,10 @@ describe('Test Project Adapter Test', () => {
   });
 
   it('should return a empty array when receive neither valid ITestSuite', async () => {
-    AxiosClientHelper.getClientResponse = jest
-      .fn()
-      .mockResolvedValue([{ id: 'non_validProject' }]);
-
-    const TestSuite =
-      await AxiosClientHelper.getClientResponse<IUnnormalizedTestSuite>({}, '');
-
-    const normalizedTestSuite = new TestSuiteAdapter().normalize(TestSuite);
+    const testSuites = [{ id: 'non_validProject' }];
+    const normalizedTestSuite = new TestSuiteAdapter().normalize(
+      testSuites as unknown as IUnnormalizedTestSuite[]
+    );
 
     expect(normalizedTestSuite).toEqual([]);
   });

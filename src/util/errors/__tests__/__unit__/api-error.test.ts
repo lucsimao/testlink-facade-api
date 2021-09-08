@@ -2,51 +2,69 @@ import { APIError, IError } from '../../api-error';
 
 describe('APIError', () => {
   it('should format error with mandatory fields', () => {
-    const error = APIError.format({ code: 404, message: 'User not found!' });
+    const error = APIError.format({
+      statusCode: 404,
+      message: 'Testlink Id not found!',
+    });
     expect(error).toEqual({
-      message: 'User not found!',
+      message: 'Testlink Id not found!',
       error: 'Not Found',
-      code: 404,
+      statusCode: 404,
     });
   });
+
+  it('should format error with mandatory fields and codeAsString', () => {
+    const error = APIError.format({
+      statusCode: 404,
+      message: 'Testlink Id not found!',
+      codeAsString: 'fakeCodeAsString',
+    });
+    expect(error).toEqual({
+      message: 'Testlink Id not found!',
+      error: 'fakeCodeAsString',
+      statusCode: 404,
+    });
+  });
+
   it('should format error with mandatory fields and description', () => {
     const error = APIError.format({
-      code: 404,
-      message: 'User not found!',
-      description: 'This error happens when there is no user created',
+      statusCode: 404,
+      message: 'Testlink Id not found!',
+      description: 'This error happens when there is no testlink Id created',
     });
     expect(error).toEqual({
-      message: 'User not found!',
+      message: 'Testlink Id not found!',
       error: 'Not Found',
-      code: 404,
-      description: 'This error happens when there is no user created',
+      statusCode: 404,
+      description: 'This error happens when there is no testlink Id created',
     });
   });
+
   it('should format error with mandatory fields and description and documentation', () => {
     const error = APIError.format({
-      code: 404,
-      message: 'User not found!',
-      description: 'This error happens when there is no user created',
+      statusCode: 404,
+      message: 'Testlink Id not found!',
+      description: 'This error happens when there is no testlink Id created',
       documentation: 'https://mydocs.com/error-404',
     });
     expect(error).toEqual({
-      message: 'User not found!',
+      message: 'Testlink Id not found!',
       error: 'Not Found',
-      code: 404,
-      description: 'This error happens when there is no user created',
+      statusCode: 404,
+      description: 'This error happens when there is no testlink Id created',
       documentation: 'https://mydocs.com/error-404',
     });
   });
 
   it('should format message when receive a error with just a message', () => {
     const error = APIError.format({
-      code: 5000,
-      message: 'User not found!',
+      statusCode: 5000,
+      message: 'Testlink Id not found!',
       description: undefined,
       documentation: undefined,
     });
     expect(error).toEqual({
-      error: 'User not found!',
+      error: 'Testlink Id not found!',
     });
   });
 

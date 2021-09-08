@@ -10,5 +10,12 @@ module.exports = {
     rootDir: root,
     displayName: 'integration-tests',
     testMatch: ['<rootDir>/**/__integration__/**/*.test.ts'],
+    collectCoverage: true,
+    collectCoverageFrom: [
+      'src/client/**/*.ts',
+      '!src/**/*.test.ts',
+      '!src/**/module-alias.ts',
+      '!src/index.ts',
+    ],
   },
 };
