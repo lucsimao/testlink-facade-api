@@ -1,6 +1,6 @@
 # Testlink Facade Api
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT) [![Actions Status](https://github.com/waldemarnt/node-typescript-api/workflows/Complete%20workflow/badge.svg)](https://github.com/lucsimao/testlink-facade-api/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT) [![Actions Status](https://github.com/waldemarnt/node-typescript-api/workflows/Complete%20workflow/badge.svg)](https://github.com/lucsimao/testlink-facade-api/actions) [![codecov](https://codecov.io/gh/lucsimao/testlink-facade-api/branch/master/graph/badge.svg?token=S02C34WGQ3)](https://codecov.io/gh/lucsimao/testlink-facade-api)
 
 Testlink facade API that provides some features to Testlink integration
 
@@ -104,3 +104,6 @@ In this project, we used the following technologies:
 - [Waldemar Neto - DO ZERO A PRODUÇÃO: APRENDA A CONSTRUIR UMA API NODE.JS COM TYPESCRIPT ](https://github.com/waldemarnt/node-typescript-api)
 - [Glaucia Lemos - Curso Typescript Zero To Hero](https://github.com/glaucia86/curso-typescript-zero-to-hero)
 - [Alura - Formação Node JS](https://cursos.alura.com.br/formacao-node-js-12)
+- [NodeJS Integration Test Best Practices](https://github.com/testjavascript/nodejs-integration-tests-best-practices)
+- [NodeJS Best Practices](https://github.com/goldbergyoni/nodebestpractices)
+- [Javascript Testing Best Practices](https://github.com/goldbergyoni/javascript-testing-best-practices)

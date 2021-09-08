@@ -33,3 +33,6 @@ jobs:
 
       - name: Run unit tests
         run: yarn test:unit
+
+      - name: Run Coverage
+        run: yarn global add codecov && codecov --disable=gcov --token="$CODECOV_TOKEN"
