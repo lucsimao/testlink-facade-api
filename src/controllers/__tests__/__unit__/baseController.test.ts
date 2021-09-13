@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 
-import { BaseController } from '@src/controllers/baseController';
-import { TestHelper } from '@test/util/testHelper';
-import { TestlinkClientError } from '@src/client/error/TestlinkClientErrorFactory';
+import { BaseController } from '../../../controllers/baseController';
+import { TestHelper } from '../../../../test/util/testHelper';
+import { TestlinkClientError } from '../../../client/error/TestlinkClientErrorFactory';
 
 class ConcreteController extends BaseController {
   public async publicHandleController(

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
-import { ITestSuite } from '@src/models/ITestSuite';
-import { TestHelper } from '@test/util/testHelper';
-import { TestSuiteController } from '@src/controllers/testSuites';
-import { TestlinkClient } from '@src/client/TestlinkClient';
+import { ITestSuite } from '../../../models/ITestSuite';
+import { TestHelper } from '../../../../test/util/testHelper';
+import { TestSuiteController } from '../../../controllers/testSuites';
+import { TestlinkClient } from '../../../client/TestlinkClient';
 
 describe('TestSuites Controller Tests', () => {
   it('should return build when getTestCasess is called', async () => {

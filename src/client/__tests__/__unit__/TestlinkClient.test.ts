@@ -1,6 +1,6 @@
-import { TestHelper } from '@test/util/testHelper';
+import { TestHelper } from '../../../../test/util/testHelper';
 import { TestLink } from 'testlink-xmlrpc';
-import { TestlinkClient } from '@src/client/TestlinkClient';
+import { TestlinkClient } from '../../../client/TestlinkClient';
 
 jest.mock('testlink-xmlrpc');
 

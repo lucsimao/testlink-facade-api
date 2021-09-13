@@ -1,10 +1,10 @@
 import {
   BuildAdapter,
   IUnnormalizedBuild,
-} from '@src/client/util/adapters/buildAdapter';
+} from '../../../../client/util/adapters/buildAdapter';
 
-import buildFixture from '@test/fixtures/unnormalized/build.json';
-import normalizedBuildFixture from '@test/fixtures/normalized/build.json';
+import buildFixture from '../../../../../test/fixtures/unnormalized/build.json';
+import normalizedBuildFixture from '../../../../../test/fixtures/normalized/build.json';
 
 describe('Test Project Adapter Test', () => {
   it('should return the correct INormalizedBuild when receive a valid IBuild', async () => {

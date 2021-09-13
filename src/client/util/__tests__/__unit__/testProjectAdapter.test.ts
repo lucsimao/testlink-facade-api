@@ -1,10 +1,10 @@
 import {
   IUnnormalizedTestProject,
   TestProjectAdapter,
-} from '@src/client/util/adapters/testProjectAdapter';
+} from '../../../../client/util/adapters/testProjectAdapter';
 
-import normalizedTestProjectFixture from '@test/fixtures/normalized/testProject.json';
-import testProjectFixture from '@test/fixtures/unnormalized/testProject.json';
+import normalizedTestProjectFixture from '../../../../../test/fixtures/normalized/testProject.json';
+import testProjectFixture from '../../../../../test/fixtures/unnormalized/testProject.json';
 
 describe('Test Project Adapter Test', () => {
   it('should return the correct INormalizedTestProject when receive a valid ITestProject', async () => {

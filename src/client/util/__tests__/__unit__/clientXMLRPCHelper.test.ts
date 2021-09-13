@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as TestLinkModule from 'testlink-xmlrpc';
 
-import { ClientXMLRPCHelper } from '@src/client/util/clientXMLRPCHelper';
-import { TestHelper } from '@test/util/testHelper';
+import { ClientXMLRPCHelper } from '../../../../client/util/clientXMLRPCHelper';
+import { TestHelper } from '../../../../../test/util/testHelper';
 
 describe('Axios Client Helper Tests', () => {
   it('should call Testlink constructor one time when getTestLinkRCPConfig is called with a empty RequestConfig', () => {

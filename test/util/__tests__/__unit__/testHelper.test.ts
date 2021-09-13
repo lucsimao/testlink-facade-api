@@ -1,4 +1,4 @@
-import { TestHelper } from '@test/util/testHelper';
+import { TestHelper } from '../../../../test/util/testHelper';
 import config from 'config';
 
 describe('Test Helper tests', () => {

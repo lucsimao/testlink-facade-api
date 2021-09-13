@@ -1,10 +1,10 @@
 import {
   IUnnormalizedTestPlan,
   TestPlanAdapter,
-} from '@src/client/util/adapters/testPlanAdapter';
+} from '../../../../client/util/adapters/testPlanAdapter';
 
-import normalizedTestPlanFixture from '@test/fixtures/normalized/testPlan.json';
-import testPlanFixture from '@test/fixtures/unnormalized/testPlan.json';
+import normalizedTestPlanFixture from '../../../../../test/fixtures/normalized/testPlan.json';
+import testPlanFixture from '../../../../../test/fixtures/unnormalized/testPlan.json';
 
 describe('Test Project Adapter Test', () => {
   it('should return the correct INormalizedTestPlan when receive a valid ITestPlan', async () => {
