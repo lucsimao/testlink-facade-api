@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "yarn",
+  "reporters": ["html", "clear-text", "progress"],
+  "mutate": [
+    "{src,lib}/**/!(*.+(s|S)pec|*.+(t|T)est).+(cjs|mjs|js|ts|jsx|tsx|html|vue)",
+    "!src/**/module-alias.ts",
+    "!src/index.ts",
+    "!src/logger.ts",
+    "!src/server.ts"
+  ],
+  "jest": {
+    "projectType": "custom",
+    "configFile": "config/jest/jest.mutation.config.js",
+    "enableFindRelatedTests": true
+  },
+  "cleanTempDir": true,
+  "testRunner": "jest",
+  "coverageAnalysis": "perTest",
+  "thresholds": { "high": 80, "low": 60, "break": 80 }
+}
