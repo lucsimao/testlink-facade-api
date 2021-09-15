@@ -3,25 +3,80 @@ import {
   IUnnormalizedBuild,
 } from '../../../../client/util/adapters/buildAdapter';
 
+import { IBuild } from '@src/models/IBuild';
 import buildFixture from '../../../../../test/fixtures/unnormalized/build.json';
 import normalizedBuildFixture from '../../../../../test/fixtures/normalized/build.json';
 
-describe('Test Project Adapter Test', () => {
-  it('should return the correct INormalizedBuild when receive a valid IBuild', async () => {
-    const build = buildFixture;
+class PublicBuildAdapter extends BuildAdapter {
+  public publicNormalizeFunction(build: IUnnormalizedBuild): IBuild {
+    return this.normalizeFunction(build);
+  }
 
-    const normalizedBuild = new BuildAdapter().normalize(build);
+  public publicIsValidTestElement(build: Partial<IUnnormalizedBuild>) {
+    return this.isValidTestElement(build);
+  }
+}
 
-    expect(normalizedBuild).toEqual(normalizedBuildFixture);
+describe('BuildAdapter Test', () => {
+  describe('Test normalizeFunction', () => {
+    it('should return the correct INormalizedBuild when receive a valid IBuild', async () => {
+      const build = buildFixture[0] as IUnnormalizedBuild;
+
+      const buildAdapter = new PublicBuildAdapter();
+
+      const normalizedBuild = buildAdapter.publicNormalizeFunction(build);
+
+      expect(normalizedBuild).toEqual(normalizedBuildFixture[0]);
+    });
+
+    it('should return the correct INormalizedBuild when receive a valid IBuild', async () => {
+      const build = buildFixture[0] as IUnnormalizedBuild;
+
+      const buildAdapter = new PublicBuildAdapter();
+
+      const normalizedBuild = buildAdapter.publicNormalizeFunction(build);
+
+      expect(normalizedBuild).toEqual(normalizedBuildFixture[0]);
+    });
+
+    it('should return default atributes when receive a invalid IBuild', async () => {
+      const build = {
+        invalid: 'testcase',
+      } as unknown as IUnnormalizedBuild;
+
+      const buildAdapter = new PublicBuildAdapter();
+
+      const normalizedBuild = buildAdapter.publicNormalizeFunction(build);
+
+      expect(normalizedBuild).toEqual({
+        id: NaN,
+        name: undefined,
+        notes: undefined,
+        testPlanId: NaN,
+      });
+    });
   });
+  describe('Test isValidTestElement', () => {
+    it('should return true receive a valid IBuild', async () => {
+      const build = buildFixture[0] as IUnnormalizedBuild;
 
-  it('should return a empty array when receive neither valid IBuild', async () => {
-    const build = [{ id: 'non_validProject' }];
+      const buildAdapter = new PublicBuildAdapter();
 
-    const normalizedBuild = new BuildAdapter().normalize([
-      build as unknown as IUnnormalizedBuild,
-    ]);
+      const normalizedBuild = buildAdapter.publicIsValidTestElement(build);
 
-    expect(normalizedBuild).toEqual([]);
+      expect(normalizedBuild).toBe(true);
+    });
+
+    it('should return false receive a invalid IBuild', async () => {
+      const build = {
+        invalid: 'testcase',
+      } as unknown as IUnnormalizedBuild;
+
+      const buildAdapter = new PublicBuildAdapter();
+
+      const normalizedBuild = buildAdapter.publicIsValidTestElement(build);
+
+      expect(normalizedBuild).toBe(false);
+    });
   });
 });
