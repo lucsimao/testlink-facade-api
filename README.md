@@ -97,6 +97,9 @@ In this project, we used the following technologies:
 - [XMLRPC-testlink](https://www.npmjs.com/package/testlink-xmlrpc) - Testlink XMLRPC module
 - [Swagger](https://swagger.io/) - for Api Documentation.
 - [Husky](https://github.com/typicode/husky) - To force tests and lint when committing and pushing.
+- [Joi](https://joi.dev/) - to validate models schemas.
+- [Codecov](https://codecov.io) - to generate _Jest_ badge report.
+- [Stryker](https://stryker-mutator.io/docs/General/dashboard/) - To run mutation tests in project and use mutation badges.
 
 # References
 
