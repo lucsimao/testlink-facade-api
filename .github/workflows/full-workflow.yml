@@ -36,3 +36,8 @@ jobs:
 
       - name: Run Coverage
         run: yarn global add codecov && codecov --disable=gcov --token="$CODECOV_TOKEN"
+
+      - name: Run mutation tests
+        run: yarn test:mutation
+        env:
+          STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}

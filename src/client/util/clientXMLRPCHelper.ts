@@ -22,8 +22,9 @@ export class ClientXMLRPCHelper {
       apiKey: requestConfig.headers?.testlinkApiKey,
       rpcPath: requestConfig.headers?.rpcPath,
     });
+
     logger.info(
-      `Connected to Testlink XMLRPC: ${await testlink.testLinkVersion}`
+      `Connected to Testlink XMLRPC: ${await testlink.testLinkVersion()}`
     );
     return testlink;
   }

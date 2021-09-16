@@ -1,5 +1,6 @@
 import { AbstractAdapter } from './abstractAdapter';
 import { ITestCase } from '@src/models/ITestCase';
+import TestCase from '@src/schemas/TestCase';
 
 export interface IUnnormalizedTestCase {
   readonly id: string;
@@ -28,6 +29,6 @@ export class TestCaseAdapter extends AbstractAdapter<
   protected isValidTestElement(
     testCase: Partial<IUnnormalizedTestCase>
   ): boolean {
-    return !!(testCase.id && testCase.name && testCase.external_id);
+    return !TestCase.validate(testCase).error;
   }
 }

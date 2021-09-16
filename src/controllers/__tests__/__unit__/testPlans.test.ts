@@ -1,16 +1,25 @@
 import { Request, Response } from 'express';
 
-import { ITestPlan } from '@src/models/ITestPlan';
-import { TestHelper } from '@test/util/testHelper';
-import { TestPlanController } from '@src/controllers/testPlans';
-import { TestlinkClient } from '@src/client/TestlinkClient';
+import { ITestPlan } from '../../../models/ITestPlan';
+import { Params } from '@src/enums/Params';
+import { TestHelper } from '../../../../test/util/testHelper';
+import { TestPlanController } from '../../../controllers/testPlans';
+import { TestlinkClient } from '../../../client/TestlinkClient';
 
 describe('TestPlans Controller Tests', () => {
-  it('should return build when getTestCasess is called', async () => {
+  it('should return build when getTestPlans is called', async () => {
     const buildController = new TestPlanController();
     const fakeRequest = {
-      headers: TestHelper.getFunctionalTestHeader(),
+      headers: {
+        ...TestHelper.getFunctionalTestHeader().headers,
+        [Params.TEST_PROJECT_ID]: 1,
+      },
     } as Request;
+    const headers = {
+      testlinkApiKey: '6e204ef53aecd003c19f2a89178ba60b',
+      testlinkPort: 80,
+      testlinkUrl: 'localhost',
+    };
     const fakeResponse = {
       status: jest.fn().mockReturnValue({ send: jest.fn() }),
     } as unknown as Response;
@@ -20,6 +29,6 @@ describe('TestPlans Controller Tests', () => {
 
     await buildController.getTestPlans(fakeRequest, fakeResponse);
 
-    expect(getTestPlans).toBeCalledTimes(1);
+    expect(getTestPlans).toBeCalledWith({ headers }, 1);
   });
 });

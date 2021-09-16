@@ -1,5 +1,6 @@
 import { AbstractAdapter } from './abstractAdapter';
 import { ITestPlan } from '@src/models/ITestPlan';
+import TestPlan from '@src/schemas/TestPlan';
 
 export interface IUnnormalizedTestPlan {
   readonly id: string;
@@ -26,11 +27,6 @@ export class TestPlanAdapter extends AbstractAdapter<
   protected isValidTestElement(
     testPlan: Partial<IUnnormalizedTestPlan>
   ): boolean {
-    return !!(
-      testPlan.id &&
-      testPlan.testproject_id &&
-      testPlan.name &&
-      testPlan.api_key
-    );
+    return !TestPlan.validate(testPlan).error;
   }
 }

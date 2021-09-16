@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 
-import { BaseController } from '@src/controllers/baseController';
-import { TestHelper } from '@test/util/testHelper';
-import { TestlinkClientError } from '@src/client/error/TestlinkClientErrorFactory';
+import { BaseController } from '../../../controllers/baseController';
+import { TestHelper } from '../../../../test/util/testHelper';
+import { TestlinkClientError } from '../../../client/error/TestlinkClientErrorFactory';
+import logger from '@src/logger';
 
 class ConcreteController extends BaseController {
   public async publicHandleController(
@@ -127,9 +128,13 @@ describe('baseController Tests', () => {
       } as unknown as Response;
       const fakeApiError = new TestlinkClientError(new Error('Fake Error'));
       const concreteController = new ConcreteController();
+      const loggerInfo = jest.spyOn(logger, 'info');
 
       concreteController.publicSendSuccessResponse(fakeResponse, fakeApiError);
 
+      expect(loggerInfo).toBeCalledWith(
+        `RESPONSE - status: 200 - body: ${JSON.stringify(fakeApiError)}`
+      );
       expect(fakeResponse.status).toBeCalled();
     });
   });

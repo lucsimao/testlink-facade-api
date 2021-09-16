@@ -1,29 +1,90 @@
 import {
   IUnnormalizedTestProject,
   TestProjectAdapter,
-} from '@src/client/util/adapters/testProjectAdapter';
+} from '../../../../client/util/adapters/testProjectAdapter';
 
-import normalizedTestProjectFixture from '@test/fixtures/normalized/testProject.json';
-import testProjectFixture from '@test/fixtures/unnormalized/testProject.json';
+import { ITestProject } from '@src/models/ITestProject';
+import normalizedTestProjectFixture from '../../../../../test/fixtures/normalized/testProject.json';
+import testProjectFixture from '../../../../../test/fixtures/unnormalized/testProject.json';
 
-describe('Test Project Adapter Test', () => {
-  it('should return the correct INormalizedTestProject when receive a valid ITestProject', async () => {
-    const testProject = testProjectFixture;
+class PublicTestProjectAdapter extends TestProjectAdapter {
+  public publicNormalizeFunction(
+    testProject: IUnnormalizedTestProject
+  ): ITestProject {
+    return this.normalizeFunction(testProject);
+  }
 
-    const normalizedTestProject = new TestProjectAdapter().normalize(
-      testProject
-    );
+  public publicIsValidTestElement(
+    testProject: Partial<IUnnormalizedTestProject>
+  ) {
+    return this.isValidTestElement(testProject);
+  }
+}
 
-    expect(normalizedTestProject).toEqual(normalizedTestProjectFixture);
+describe('TestProjectAdapter Test', () => {
+  describe('Test normalizeFunction', () => {
+    it('should return the correct INormalizedTestProject when receive a valid ITestProject', async () => {
+      const testProject = testProjectFixture[0] as IUnnormalizedTestProject;
+
+      const testProjectAdapter = new PublicTestProjectAdapter();
+
+      const normalizedTestProject =
+        testProjectAdapter.publicNormalizeFunction(testProject);
+
+      expect(normalizedTestProject).toEqual(normalizedTestProjectFixture[0]);
+    });
+
+    it('should return the correct INormalizedTestProject when receive a valid ITestProject', async () => {
+      const testProject = testProjectFixture[0] as IUnnormalizedTestProject;
+
+      const testProjectAdapter = new PublicTestProjectAdapter();
+
+      const normalizedTestProject =
+        testProjectAdapter.publicNormalizeFunction(testProject);
+
+      expect(normalizedTestProject).toEqual(normalizedTestProjectFixture[0]);
+    });
+
+    it('should return default atributes when receive a invalid ITestProject', async () => {
+      const testProject = {
+        invalid: 'testcase',
+      } as unknown as IUnnormalizedTestProject;
+
+      const testProjectAdapter = new PublicTestProjectAdapter();
+
+      const normalizedTestProject =
+        testProjectAdapter.publicNormalizeFunction(testProject);
+
+      expect(normalizedTestProject).toEqual({
+        apiKey: undefined,
+        id: NaN,
+        name: undefined,
+        prefix: undefined,
+      });
+    });
   });
+  describe('Test isValidTestElement', () => {
+    it('should return true receive a valid ITestProject', async () => {
+      const testProject = testProjectFixture[0] as IUnnormalizedTestProject;
+      const testProjectAdapter = new PublicTestProjectAdapter();
 
-  it('should return a empty array when receive neither valid ITestProject', async () => {
-    const testProjects = [{ id: 'non_validProject' }];
+      const normalizedTestProject =
+        testProjectAdapter.publicIsValidTestElement(testProject);
 
-    const normalizedTestProject = new TestProjectAdapter().normalize(
-      testProjects as unknown as IUnnormalizedTestProject[]
-    );
+      expect(normalizedTestProject).toBe(true);
+    });
 
-    expect(normalizedTestProject).toEqual([]);
+    it('should return false receive a invalid ITestProject', async () => {
+      const testProject = {
+        invalid: 'testcase',
+      } as unknown as IUnnormalizedTestProject;
+
+      const testProjectAdapter = new PublicTestProjectAdapter();
+
+      const normalizedTestProject =
+        testProjectAdapter.publicIsValidTestElement(testProject);
+
+      expect(normalizedTestProject).toBe(false);
+    });
   });
 });

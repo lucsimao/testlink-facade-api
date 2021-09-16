@@ -1,5 +1,6 @@
 import { AbstractAdapter } from './abstractAdapter';
 import { ITestProject } from '@src/models/ITestProject';
+import TestProject from '@src/schemas/TestProject';
 
 export interface IUnnormalizedTestProject {
   readonly id: string;
@@ -26,11 +27,6 @@ export class TestProjectAdapter extends AbstractAdapter<
   protected isValidTestElement(
     testProject: Partial<IUnnormalizedTestProject>
   ): boolean {
-    return !!(
-      testProject.id &&
-      testProject.api_key &&
-      testProject.prefix &&
-      testProject.name
-    );
+    return !TestProject.validate(testProject).error;
   }
 }
