@@ -1,4 +1,5 @@
 import { AbstractAdapter } from './abstractAdapter';
+import Build from '@src/schemas/Build';
 import { IBuild } from '@src/models/IBuild';
 
 export interface IUnnormalizedBuild {
@@ -19,6 +20,6 @@ export class BuildAdapter extends AbstractAdapter<IUnnormalizedBuild, IBuild> {
   }
 
   protected isValidTestElement(build: Partial<IUnnormalizedBuild>): boolean {
-    return !!(build.id && build.name && build.testplan_id);
+    return !Build.validate(build).error;
   }
 }

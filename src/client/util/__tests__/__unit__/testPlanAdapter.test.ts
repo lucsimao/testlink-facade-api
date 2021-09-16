@@ -1,27 +1,88 @@
 import {
   IUnnormalizedTestPlan,
   TestPlanAdapter,
-} from '@src/client/util/adapters/testPlanAdapter';
+} from '../../../../client/util/adapters/testPlanAdapter';
 
-import normalizedTestPlanFixture from '@test/fixtures/normalized/testPlan.json';
-import testPlanFixture from '@test/fixtures/unnormalized/testPlan.json';
+import { ITestPlan } from '@src/models/ITestPlan';
+import normalizedTestPlanFixture from '../../../../../test/fixtures/normalized/testPlan.json';
+import testPlanFixture from '../../../../../test/fixtures/unnormalized/testPlan.json';
 
-describe('Test Project Adapter Test', () => {
-  it('should return the correct INormalizedTestPlan when receive a valid ITestPlan', async () => {
-    const testPlan = testPlanFixture;
+class PublicTestPlanAdapter extends TestPlanAdapter {
+  public publicNormalizeFunction(testPlan: IUnnormalizedTestPlan): ITestPlan {
+    return this.normalizeFunction(testPlan);
+  }
 
-    const normalizedTestPlan = new TestPlanAdapter().normalize(testPlan);
+  public publicIsValidTestElement(testPlan: Partial<IUnnormalizedTestPlan>) {
+    return this.isValidTestElement(testPlan);
+  }
+}
 
-    expect(normalizedTestPlan).toEqual(normalizedTestPlanFixture);
+describe('TestPlanAdapter Test', () => {
+  describe('Test normalizeFunction', () => {
+    it('should return the correct INormalizedTestPlan when receive a valid ITestPlan', async () => {
+      const testPlan = testPlanFixture[0] as IUnnormalizedTestPlan;
+
+      const testPlanAdapter = new PublicTestPlanAdapter();
+
+      const normalizedTestPlan =
+        testPlanAdapter.publicNormalizeFunction(testPlan);
+
+      expect(normalizedTestPlan).toEqual(normalizedTestPlanFixture[0]);
+    });
+
+    it('should return the correct INormalizedTestPlan when receive a valid ITestPlan', async () => {
+      const testPlan = testPlanFixture[0] as IUnnormalizedTestPlan;
+
+      const testPlanAdapter = new PublicTestPlanAdapter();
+
+      const normalizedTestPlan =
+        testPlanAdapter.publicNormalizeFunction(testPlan);
+
+      expect(normalizedTestPlan).toEqual(normalizedTestPlanFixture[0]);
+    });
+
+    it('should return default atributes when receive a invalid ITestPlan', async () => {
+      const testPlan = {
+        invalid: 'testcase',
+      } as unknown as IUnnormalizedTestPlan;
+
+      const testPlanAdapter = new PublicTestPlanAdapter();
+
+      const normalizedTestPlan =
+        testPlanAdapter.publicNormalizeFunction(testPlan);
+
+      expect(normalizedTestPlan).toEqual({
+        apiKey: undefined,
+        id: NaN,
+        name: undefined,
+        notes: undefined,
+        testProjectId: NaN,
+      });
+    });
   });
+  describe('Test isValidTestElement', () => {
+    it('should return true receive a valid ITestPlan', async () => {
+      const testPlan = testPlanFixture[0] as IUnnormalizedTestPlan;
 
-  it('should return a empty array when receive neither valid ITestPlan', async () => {
-    const testPlans = [{ id: 'non_validProject' }];
+      const testPlanAdapter = new PublicTestPlanAdapter();
 
-    const normalizedTestPlan = new TestPlanAdapter().normalize(
-      testPlans as unknown as IUnnormalizedTestPlan[]
-    );
+      const normalizedTestPlan =
+        testPlanAdapter.publicIsValidTestElement(testPlan);
 
-    expect(normalizedTestPlan).toEqual([]);
+      expect(normalizedTestPlan).toBe(true);
+    });
+
+    it('should return false receive a invalid ITestPlan', async () => {
+      const testPlan = {
+        invalid: 'testcase',
+      } as unknown as IUnnormalizedTestPlan;
+
+      const testPlanAdapter = new PublicTestPlanAdapter();
+
+      const normalizedTestPlan =
+        testPlanAdapter.publicIsValidTestElement(testPlan);
+
+      expect(normalizedTestPlan).toBe(false);
+    });
   });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   TestPlanNotFoundError,
   TestProjectNotFoundError,
@@ -10,10 +11,10 @@ import {
 describe('TestlinkClientErrorFactory Tests', () => {
   describe('TestlinkClientError Tests', () => {
     it('should return statusCode from testLinkClientError', () => {
-      const testlinkClientError = new TestlinkClientError(
-        new Error('fakeError'),
-        400
-      );
+      const error = new Error('fakeError');
+
+      const testlinkClientError = new TestlinkClientError(error, 400);
+
       expect(testlinkClientError.statusCode).toBe(400);
     });
   });
@@ -23,7 +24,14 @@ describe('TestlinkClientErrorFactory Tests', () => {
         '[2000] (getBuildsForTestPlan) - The Test Plan ID (0) provided does not exist!'
       );
 
+      const parseMessage = jest.spyOn(
+        TestlinkClientErrorFactory as any,
+        'parseMessage'
+      );
+
       const result = TestlinkClientErrorFactory.parseError(error);
+
+      expect(parseMessage).toHaveReturnedWith('2000');
       expect(result).toBeInstanceOf(TestlinkAuthenticationError);
     });
 
@@ -33,6 +41,7 @@ describe('TestlinkClientErrorFactory Tests', () => {
       );
 
       const result = TestlinkClientErrorFactory.parseError(error);
+
       expect(result).toBeInstanceOf(TestPlanNotFoundError);
     });
 
@@ -42,6 +51,7 @@ describe('TestlinkClientErrorFactory Tests', () => {
       );
 
       const result = TestlinkClientErrorFactory.parseError(error);
+
       expect(result).toBeInstanceOf(TestProjectNotFoundError);
     });
 
@@ -51,13 +61,20 @@ describe('TestlinkClientErrorFactory Tests', () => {
       );
 
       const result = TestlinkClientErrorFactory.parseError(error);
+
       expect(result).toBeInstanceOf(TestSuiteNotFoundError);
     });
 
     it('should not return a TeslinkError when receive a invalid string error', () => {
       const error = new Error('Error: getaddrinfo ENOTFOUND invalid url');
+      const parseMessage = jest.spyOn(
+        TestlinkClientErrorFactory as any,
+        'parseMessage'
+      );
 
       const result = TestlinkClientErrorFactory.parseError(error);
+
+      expect(parseMessage).toHaveReturnedWith('');
       expect(result).toBeInstanceOf(Error);
     });
   });

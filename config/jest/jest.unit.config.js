@@ -9,7 +9,7 @@ module.exports = {
   ...{
     rootDir: root,
     displayName: 'unit-tests',
-    testMatch: ['<rootDir>/**/__unit__/**/*.test.ts'],
+    testMatch: ['<rootDir>/src/**/__unit__/**/*.test.ts'],
     collectCoverage: true,
     collectCoverageFrom: [
       'src/**/*.ts',

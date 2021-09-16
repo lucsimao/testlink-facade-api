@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Server } from 'http';
-import { SetupServer } from '@src/server';
+import { SetupServer } from '../../server';
 
 describe('Server Tests', () => {
   describe('start Tests', () => {

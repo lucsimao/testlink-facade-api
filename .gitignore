@@ -67,3 +67,8 @@ dist/
 # Persistence
 
 persistence
+# stryker temp files
+.stryker-tmp
+
+#reports
+*.html

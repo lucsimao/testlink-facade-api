@@ -1,6 +1,6 @@
 import { AbstractAdapter } from './abstractAdapter';
 import { ITestSuite } from '@src/models/ITestSuite';
-
+import TestSuite from '@src/schemas/TestSuite';
 export interface IUnnormalizedTestSuite {
   readonly id: string;
   readonly name: string;
@@ -22,6 +22,6 @@ export class TestSuiteAdapter extends AbstractAdapter<
   protected isValidTestElement(
     testSuite: Partial<IUnnormalizedTestSuite>
   ): boolean {
-    return !!(testSuite.id && testSuite.parent_id && testSuite.name);
+    return !TestSuite.validate(testSuite).error;
   }
 }
