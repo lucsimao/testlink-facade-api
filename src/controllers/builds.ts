@@ -7,6 +7,22 @@ import { TestlinkClient } from '@src/client/TestlinkClient';
 
 @Controller('builds')
 export class BuildController extends BaseController {
+  /**
+   * GET /builds
+   * @tag Builds
+   * @summary Get builds.
+   * @description Get the build from a testPlan
+   * @paramComponent {TestlinkApiKey}
+   * @paramComponent {TestlinkPort}
+   * @paramComponent {TestlinkUrl}
+   * @paramComponent {TestPlanId}
+   * @response 200 - Success
+   * @responseContent {Builds} 200.application/json
+   * @responseComponent {BadRequest} 400
+   * @responseComponent {Unauthorized} 401
+   * @responseComponent {TooManyRequests} 429
+   * @responseComponent {InternalServerError} 500
+   */
   @Get('')
   public async getBuilds(request: Request, response: Response): Promise<void> {
     this.handleController(response, async () => {

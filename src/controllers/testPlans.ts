@@ -7,6 +7,22 @@ import { TestlinkClient } from '@src/client/TestlinkClient';
 
 @Controller('testPlans')
 export class TestPlanController extends BaseController {
+  /**
+   * GET /testPlans
+   * @tag TestPlans
+   * @summary Get testPlans
+   * @description Get the testPlans from a testProject
+   * @paramComponent {TestlinkApiKey}
+   * @paramComponent {TestlinkPort}
+   * @paramComponent {TestlinkUrl}
+   * @paramComponent {TestProjectId}
+   * @response 200 - Success
+   * @responseContent {TestProjects} 200.application/json
+   * @responseComponent {BadRequest} 400
+   * @responseComponent {Unauthorized} 401
+   * @responseComponent {TooManyRequests} 429
+   * @responseComponent {InternalServerError} 500
+   */
   @Get('')
   public async getTestPlans(
     request: Request,

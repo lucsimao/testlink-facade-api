@@ -14,6 +14,7 @@ import { TestSuiteController } from '@src/controllers/testSuites';
 import apiSchema from '@src/api.schema.json';
 import http from 'http';
 import logger from './logger';
+import rateLimiterMiddleware from './middlewares/rateLimiterMiddleware';
 import swaggerUi from 'swagger-ui-express';
 
 export class SetupServer extends Server {
@@ -29,6 +30,7 @@ export class SetupServer extends Server {
 
   private async setupExpress(): Promise<void> {
     this.app.use(json());
+    this.setupRateLimiter();
     await this.docsSetup();
     this.setupControllers();
   }
@@ -42,6 +44,10 @@ export class SetupServer extends Server {
       new TestPlanController(),
       new TestSuiteController(),
     ]);
+  }
+
+  private setupRateLimiter() {
+    this.app.use(rateLimiterMiddleware());
   }
 
   public getApp(): Application {

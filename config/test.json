@@ -8,6 +8,10 @@
     },
     "logger": {
       "enabled": false
+    },
+    "rateLimiter": {
+      "windowMs": 60000,
+      "max": 100
     }
   }
 }
