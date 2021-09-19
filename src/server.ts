@@ -11,12 +11,14 @@ import { TestCaseController } from '@src/controllers/testCases';
 import { TestPlanController } from '@src/controllers/testPlans';
 import { TestProjectController } from '@src/controllers/testProjects';
 import { TestSuiteController } from '@src/controllers/testSuites';
-import apiSchema from '@src/api.schema.json';
 import http from 'http';
 import logger from './logger';
+import openapi from 'openapi-comment-parser';
+import openapiConfig from './openapirc';
 import rateLimiterMiddleware from './middlewares/rateLimiterMiddleware';
 import swaggerUi from 'swagger-ui-express';
 
+const apiSchema = openapi(openapiConfig);
 export class SetupServer extends Server {
   private server?: http.Server;
 
