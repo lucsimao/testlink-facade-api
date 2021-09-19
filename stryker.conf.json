@@ -7,7 +7,8 @@
     "!src/**/module-alias.ts",
     "!src/index.ts",
     "!src/logger.ts",
-    "!src/server.ts"
+    "!src/server.ts",
+    "!src/openapirc.ts"
   ],
   "jest": {
     "projectType": "custom",

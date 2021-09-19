@@ -5,6 +5,10 @@
       "url": "TESTLINK_URL",
       "port": "TESTLINK_PORT",
       "apikey": "TESTLINK_API_KEY"
+    },
+    "rateLimiter": {
+      "windowMs": "WINDOW_MILI_SECONDS",
+      "max": "MAX_REQUESTS"
     }
   }
 }

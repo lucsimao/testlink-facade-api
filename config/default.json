@@ -9,6 +9,10 @@
     "logger": {
       "enabled": true,
       "level": "info"
+    },
+    "rateLimiter": {
+      "windowMs": 60000,
+      "max": 100
     }
   }
 }

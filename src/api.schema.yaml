@@ -1,0 +1,203 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Surf Forecast
+  description: Surf Forecast API
+  termsOfService: 'https://github.com/brunohafonso95/weather-api/blob/master/README.md'
+  contact:
+    email: lucasimao64@gmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: x-access-token
+      in: header
+
+  parameters:
+    TestlinkApiKey:
+      in: header
+      name: testlink-api-key
+      schema:
+        $ref: '#/components/schemas/testlink-api-key'
+      required: true
+    TestlinkPort:
+      in: header
+      name: testlink-port
+      schema:
+        $ref: '#/components/schemas/testlink-port'
+      required: true
+    TestlinkUrl:
+      in: header
+      name: testlink-url
+      schema:
+        $ref: '#/components/schemas/testlink-url'
+      required: true
+    TestPlanId:
+      in: header
+      name: test-plan-id
+      schema:
+        $ref: '#/components/schemas/test-plan-id'
+      required: true
+    TestProjectId:
+      in: header
+      name: test-project-id
+      schema:
+        $ref: '#/components/schemas/test-project-id'
+      required: true
+    TestSuiteId:
+      in: header
+      name: test-suite-id
+      schema:
+        $ref: '#/components/schemas/test-suite-id'
+
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Too Many Requests
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  schemas:
+    testlink-api-key:
+      type: string
+      example: 6e204ef53aecd003c19f2a89178ba60b
+    testlink-url:
+      type: string
+      example: localhost
+    testlink-port:
+      type: number
+      example: 80
+    id:
+      type: number
+      example: 1
+    name:
+      type: string
+      example: name-example
+    notes:
+      type: string
+      example: notes-example
+    test-plan-id:
+      type: number
+      example: 2
+    test-project-id:
+      type: number
+      example: 1
+    test-suite-id:
+      type: number
+      example: 3
+    externalId:
+      type: string
+      example: tpe--1
+    summary:
+      type: string
+      example: example summary
+    preconditions:
+      type: string
+      example: example preconditions
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: number
+        error:
+          type: string
+        description:
+          type: string
+        documentation:
+          type: string
+      example:
+        message: Internal Server Error
+        code: '500'
+        error: Internal Server Error
+    Builds:
+      type: array
+      items:
+        properties:
+          id:
+            $ref: '#/components/schemas/id'
+          name:
+            $ref: '#/components/schemas/name'
+          notes:
+            $ref: '#/components/schemas/notes'
+          testPlanId:
+            $ref: '#/components/schemas/id'
+    TestCases:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/id'
+          externalId:
+            $ref: '#/components/schemas/externalId'
+          name:
+            $ref: '#/components/schemas/name'
+          summary:
+            $ref: '#/components/schemas/summary'
+          preconditions:
+            $ref: '#/components/schemas/preconditions'
+    TestProjects:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/id'
+          name:
+            $ref: '#/components/schemas/name'
+          prefix:
+            type: string
+            example: tce-
+          apiKey:
+            $ref: '#/components/schemas/testlink-api-key'
+    TestPlans:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/id'
+          name:
+            $ref: '#/components/schemas/name'
+          testProjectId:
+            $ref: '#/components/schemas/id'
+          apiKey:
+            $ref: '#/components/schemas/testlink-api-key'
+          notes:
+            $ref: '#/components/schemas/notes'
+    TestSuites:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/id'
+          name:
+            $ref: '#/components/schemas/name'
+          parentId:
+            $ref: '#/components/schemas/id'
