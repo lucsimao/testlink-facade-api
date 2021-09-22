@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 
 import { APIError } from '@src/util/errors/api-error';
 import { AxiosResponse } from 'axios';
+import { ILoggerParams } from '@src/util/logger/Logger';
 import { TestlinkClient } from '@src/client/TestlinkClient';
 import { TestlinkClientError } from '@src/client/error/TestlinkClientErrorFactory';
 import logger from '@src/logger';
@@ -64,7 +65,9 @@ export abstract class BaseController {
     body: unknown,
     status = 200
   ): void {
-    logger.info(`RESPONSE - status: ${status} - body: ${JSON.stringify(body)}`);
+    logger.info({
+      msg: `RESPONSE - status: ${status} - body: ${JSON.stringify(body)}`,
+    });
     response.status(status).send(body);
   }
 
@@ -72,7 +75,7 @@ export abstract class BaseController {
     response: Response,
     apiError: TestlinkClientError
   ): void {
-    logger.error(apiError);
+    logger.error(APIError.format(apiError) as ILoggerParams);
     response.status(apiError.statusCode || 500).send(APIError.format(apiError));
   }
 }

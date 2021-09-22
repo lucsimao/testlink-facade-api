@@ -34,7 +34,7 @@ describe('Build Tests', () => {
       .get('/builds')
       .set(request);
 
-    expect(body).toEqual({ error: 'Internal server Error' });
+    expect(body).toEqual({ msg: 'Internal server Error' });
     expect(status).toBe(500);
   });
 });
