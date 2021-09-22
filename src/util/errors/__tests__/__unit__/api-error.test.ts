@@ -7,7 +7,7 @@ describe('APIError', () => {
       message: 'Testlink Id not found!',
     });
     expect(error).toEqual({
-      message: 'Testlink Id not found!',
+      msg: 'Testlink Id not found!',
       error: 'Not Found',
       statusCode: 404,
     });
@@ -20,7 +20,7 @@ describe('APIError', () => {
       codeAsString: 'fakeCodeAsString',
     });
     expect(error).toEqual({
-      message: 'Testlink Id not found!',
+      msg: 'Testlink Id not found!',
       error: 'fakeCodeAsString',
       statusCode: 404,
     });
@@ -33,7 +33,7 @@ describe('APIError', () => {
       description: 'This error happens when there is no testlink Id created',
     });
     expect(error).toEqual({
-      message: 'Testlink Id not found!',
+      msg: 'Testlink Id not found!',
       error: 'Not Found',
       statusCode: 404,
       description: 'This error happens when there is no testlink Id created',
@@ -48,7 +48,7 @@ describe('APIError', () => {
       documentation: 'https://mydocs.com/error-404',
     });
     expect(error).toEqual({
-      message: 'Testlink Id not found!',
+      msg: 'Testlink Id not found!',
       error: 'Not Found',
       statusCode: 404,
       description: 'This error happens when there is no testlink Id created',
@@ -64,13 +64,13 @@ describe('APIError', () => {
       documentation: undefined,
     });
     expect(error).toEqual({
-      error: 'Testlink Id not found!',
+      msg: 'Testlink Id not found!',
     });
   });
 
   it('should format message when receive a error with just a message', () => {
     const errorToFormat = {} as IError;
     const error = APIError.format(errorToFormat);
-    expect(error).toEqual({ error: '[object Object]' });
+    expect(error).toEqual({ msg: '[object Object]' });
   });
 });

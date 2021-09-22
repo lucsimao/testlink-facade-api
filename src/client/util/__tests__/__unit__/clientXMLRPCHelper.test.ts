@@ -19,7 +19,9 @@ describe('Axios Client Helper Tests', () => {
 
     expect(constructorSpy).toBeCalledTimes(1);
     expect(result).toEqual(fakeTestlink);
-    expect(loggerInfo).toBeCalledWith(`Connected to Testlink XMLRPC: 10`);
+    expect(loggerInfo).toBeCalledWith({
+      msg: 'Connected to Testlink XMLRPC: 10',
+    });
   });
 
   it('should call Testlink constructor one time when getTestLinkRCPConfig is called with a valid RequestConfig', async () => {

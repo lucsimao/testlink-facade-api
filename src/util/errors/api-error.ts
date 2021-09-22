@@ -9,14 +9,15 @@ export interface IError {
 }
 
 export interface IErrorResponse extends Partial<Omit<IError, 'codeAsString'>> {
-  error: string;
+  error?: string;
+  msg: string;
 }
 
 export class APIError {
   public static format(error: IError): IErrorResponse {
     try {
       return {
-        message: error.message,
+        msg: error.message,
         statusCode: error.statusCode,
         error: error.codeAsString
           ? error.codeAsString
@@ -25,7 +26,7 @@ export class APIError {
         ...(error.description && { description: error.description }),
       };
     } catch (_) {
-      return { error: error.message || error.toString() };
+      return { msg: error.message || error.toString() };
     }
   }
 }
