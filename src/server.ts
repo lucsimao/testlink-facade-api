@@ -1,11 +1,8 @@
 import './util/module-alias';
 
-import * as OpenApiValidator from 'express-openapi-validator';
-
 import { Application, json } from 'express';
 
 import { BuildController } from '@src/controllers/builds';
-import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import { Server } from '@overnightjs/core';
 import { TestCaseController } from '@src/controllers/testCases';
 import { TestPlanController } from '@src/controllers/testPlans';
@@ -13,12 +10,9 @@ import { TestProjectController } from '@src/controllers/testProjects';
 import { TestSuiteController } from '@src/controllers/testSuites';
 import http from 'http';
 import logger from './logger';
-import openapi from 'openapi-comment-parser';
-import openapiConfig from './openapirc';
 import rateLimiterMiddleware from './middlewares/rateLimiterMiddleware';
-import swaggerUi from 'swagger-ui-express';
+import swaggerStats from './middlewares/swaggerStats';
 
-const apiSchema = openapi(openapiConfig);
 export class SetupServer extends Server {
   private server?: http.Server;
 
@@ -72,13 +66,6 @@ export class SetupServer extends Server {
   }
 
   private async docsSetup(): Promise<void> {
-    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
-    this.app.use(
-      await OpenApiValidator.middleware({
-        apiSpec: apiSchema as OpenAPIV3.Document,
-        validateRequests: true,
-        validateResponses: true,
-      })
-    );
+    this.app.use(await swaggerStats());
   }
 }
