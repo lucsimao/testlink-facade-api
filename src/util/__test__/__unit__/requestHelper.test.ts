@@ -13,9 +13,9 @@ describe('sendSuccessResponse Tests', () => {
 
     RequestHelper.sendSuccessResponse(fakeResponse, fakeApiError);
 
-    expect(loggerInfo).toBeCalledWith(
-      `RESPONSE - status: 200 - body: ${JSON.stringify(fakeApiError)}`
-    );
+    expect(loggerInfo).toBeCalledWith({
+      msg: `RESPONSE - status: 200 - body: ${JSON.stringify(fakeApiError)}`,
+    });
     expect(fakeResponse.status).toBeCalled();
   });
 });

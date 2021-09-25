@@ -20,14 +20,14 @@ const setup = async (server: SetupServer) => {
 
 const setUpExceptionsHandle = () => {
   process.on('unhandledRejection', (reason, promise) => {
-    logger.error(
-      `App exiting due to an unhandled promise: ${promise} and reason: ${reason}`
-    );
+    logger.error({
+      msg: `App exiting due to an unhandled promise: ${promise} and reason: ${reason}`,
+    });
     throw reason;
   });
 
   process.on('uncaughtException', (error) => {
-    logger.error(`App exiting due to an uncaught exception: ${error}`);
+    logger.error({ msg: `App exiting due to an uncaught exception: ${error}` });
     process.exit(ExitStatus.Failure);
   });
 };
@@ -37,7 +37,7 @@ const handleGracefulShutdown = (server: SetupServer) => {
   for (const exitSignal of exitSignals) {
     process.on(exitSignal, async () => {
       await server.close();
-      logger.info(`App exited with success`);
+      logger.info({ msg: `App exited with success` });
       process.exit(ExitStatus.Success);
     });
   }
@@ -50,7 +50,7 @@ const handleGracefulShutdown = (server: SetupServer) => {
     const server = new SetupServer(config.get('App.port'));
     await setup(server);
   } catch (error) {
-    logger.error(`App exited with error: ${error}`);
+    logger.error({ msg: `App exited with error: ${error}` });
     process.exit(ExitStatus.Failure);
   }
 })();
