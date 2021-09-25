@@ -11,7 +11,7 @@
     "start": "yarn build && node dist/src/index.js ",
     "start:local": "dotenv -e .env -- ts-node-dev src/index.ts",
     "test": "yarn lint && yarn style:check && yarn test:unit && yarn test:integration && yarn test:functional",
-    "test:unit": "jest --config ./config/jest/jest.unit.config.js",
+    "test:unit": "jest --config ./config/jest/jest.unit.config.js --forceExit",
     "test:integration": "jest --config ./config/jest/jest.integration.config.js",
     "test:functional": "jest --config ./config/jest/jest.functional.config.js --forceExit --runInBand",
     "test:mutation": "stryker run",
