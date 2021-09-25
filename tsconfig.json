@@ -13,7 +13,7 @@
     "noImplicitThis": true,
     "resolveJsonModule": true,
     "alwaysStrict": true,
-    "removeComments": true,
+    "removeComments": false,
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

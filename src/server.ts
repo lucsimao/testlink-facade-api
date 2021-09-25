@@ -11,7 +11,7 @@ import { TestSuiteController } from '@src/controllers/testSuites';
 import http from 'http';
 import logger from './logger';
 import rateLimiterMiddleware from './middlewares/rateLimiterMiddleware';
-import swaggerStats from './middlewares/swaggerStats';
+import swaggerStatsMiddleware from './middlewares/swaggerStatsMiddleware';
 
 export class SetupServer extends Server {
   private server?: http.Server;
@@ -66,6 +66,6 @@ export class SetupServer extends Server {
   }
 
   private async docsSetup(): Promise<void> {
-    this.app.use(await swaggerStats());
+    this.app.use(await swaggerStatsMiddleware());
   }
 }

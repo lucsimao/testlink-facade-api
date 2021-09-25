@@ -11,14 +11,7 @@ export default async function (): Promise<Router> {
   const app = Router();
   const apiSchema = openapi(openapiConfig);
 
-  app.use(swaggerStats.getMiddleware());
-
-  app.get('/stats', (_req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-
-    res.send(swaggerStats.getCoreStats());
-  });
-
+  app.use(swaggerStats.getMiddleware({ swaggerSpec: apiSchema }));
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
   app.use(
     await OpenApiValidator.middleware({

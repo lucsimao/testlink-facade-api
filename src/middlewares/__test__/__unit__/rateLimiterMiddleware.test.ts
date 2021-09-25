@@ -38,7 +38,7 @@ describe('Test RateLimiterMiddleware', () => {
     expect(mockedResponse.status).toBeCalledWith(429);
     expect(mockedResponse.status().send).toBeCalledWith({
       error: 'Too Many Requests',
-      message: "Too many requests to the '/forecast endpoint'",
+      message: 'Too many requests to the undefined endpoint',
       statusCode: 429,
     });
     expect(ip).toBe(10);
