@@ -1,6 +1,6 @@
 # Testlink Facade Api
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT) [![Actions Status](https://github.com/waldemarnt/node-typescript-api/workflows/Complete%20workflow/badge.svg)](https://github.com/lucsimao/testlink-facade-api/actions) [![codecov](https://codecov.io/gh/lucsimao/testlink-facade-api/branch/master/graph/badge.svg?token=S02C34WGQ3)](https://codecov.io/gh/lucsimao/testlink-facade-api)
+[![License: MIT](https://img.shields.io/badge/License-MIT-red.svg)](https://opensource.org/licenses/MIT) [![Workflow](https://github.com/lucsimao/testlink-facade-api/actions/workflows/full-workflow.yml/badge.svg)](https://github.com/lucsimao/testlink-facade-api/actions/workflows/full-workflow.yml) [![codecov](https://codecov.io/gh/lucsimao/testlink-facade-api/branch/master/graph/badge.svg?token=S02C34WGQ3)](https://codecov.io/gh/lucsimao/testlink-facade-api)
 [![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Flucsimao%2Ftestlink-facade-api%2F/master)](https://dashboard.stryker-mutator.io/reports/github.com/lucsimao/testlink-facade-api/master)
 
 Testlink facade API that provides some features to Testlink integration
