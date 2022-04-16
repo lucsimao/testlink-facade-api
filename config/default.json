@@ -1,6 +1,6 @@
 {
   "App": {
-    "port": 3000,
+    "port": 8080,
     "testlink": {
       "url": "localhost",
       "port": 80,

@@ -1,9 +1,10 @@
 openapi: 3.0.1
+
 info:
   version: 1.0.0
-  title: Surf Forecast
-  description: Surf Forecast API
-  termsOfService: 'https://github.com/brunohafonso95/weather-api/blob/master/README.md'
+  title: Testlink Facade
+  description: Testlink Facade Api
+  termsOfService: 'https://github.com/lucsimao/testlink-facade-api'
   contact:
     email: lucasimao64@gmail.com
   license:

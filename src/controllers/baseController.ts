@@ -1,11 +1,9 @@
 import { Request, Response } from 'express';
 
-import { APIError } from '@src/util/errors/api-error';
 import { AxiosResponse } from 'axios';
-import { ILoggerParams } from '@src/util/logger/Logger';
+import RequestHelper from '@src/util/requestHelper';
 import { TestlinkClient } from '@src/client/TestlinkClient';
 import { TestlinkClientError } from '@src/client/error/TestlinkClientErrorFactory';
-import logger from '@src/logger';
 
 export interface ITestlinkClientParams {
   readonly testlinkApiKey: string | string[] | undefined;
@@ -65,17 +63,13 @@ export abstract class BaseController {
     body: unknown,
     status = 200
   ): void {
-    logger.info({
-      msg: `RESPONSE - status: ${status} - body: ${JSON.stringify(body)}`,
-    });
-    response.status(status).send(body);
+    RequestHelper.sendSuccessResponse(response, body, status);
   }
 
   protected sendErrorResponse(
     response: Response,
     apiError: TestlinkClientError
   ): void {
-    logger.error(APIError.format(apiError) as ILoggerParams);
-    response.status(apiError.statusCode || 500).send(APIError.format(apiError));
+    RequestHelper.sendErrorResponse(response, apiError);
   }
 }

@@ -11,11 +11,11 @@ export default function (): RateLimit {
     keyGenerator(req: Request): string {
       return req.ip;
     },
-    handler(_: Request, res: Response): void {
+    handler(req: Request, res: Response): void {
       res.status(429).send(
         APIError.format({
           statusCode: 429,
-          message: "Too many requests to the '/forecast endpoint'",
+          message: `Too many requests to the ${req.path} endpoint`,
         })
       );
     },
